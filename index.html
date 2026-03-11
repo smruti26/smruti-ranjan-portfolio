@@ -356,6 +356,7 @@ section { padding: 6rem 3.5rem; position: relative; z-index: 1; }
 }
 .skill-fill.animated { transform: scaleX(1); }
 .cloud { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
 .cloud-tag {
   font-size: 0.75rem; font-weight: 600; padding: 0.4rem 0.9rem; border-radius: 8px;
   background: var(--bg2); border: 1px solid var(--border); color: var(--text2);
@@ -585,7 +586,7 @@ section { padding: 6rem 3.5rem; position: relative; z-index: 1; }
   display: flex; gap: 3rem; align-items: center;
 }
 .sig-skills-left { flex: 1; }
-.sig-skills-right { flex: 0 0 340px; }
+.sig-skills-right { flex: 0 0 480px; }
 .sig-personal-title {
   font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
   color: rgba(255,255,255,0.4); margin-bottom: 1.25rem;
@@ -619,7 +620,7 @@ section { padding: 6rem 3.5rem; position: relative; z-index: 1; }
 
 /* Canvas orbit */
 #orbitCanvas {
-  width: 340px; height: 340px; display: block;
+  width: 480px; height: 480px; display: block;
   border-radius: 50%;
   background: radial-gradient(circle at 50% 50%, rgba(45,106,143,0.12) 0%, rgba(45,106,143,0.04) 40%, transparent 70%);
 }
@@ -629,19 +630,240 @@ section { padding: 6rem 3.5rem; position: relative; z-index: 1; }
 .reveal { opacity:0; transform:translateY(28px); transition:opacity 0.65s ease,transform 0.65s ease; }
 .reveal.visible { opacity:1; transform:none; }
 
-@media (max-width:900px) {
-  nav { padding: 0 1.5rem; }
+/* ===== TABLET <= 900px ===== */
+@media (max-width: 900px) {
+  nav { padding: 0 1.25rem; }
   .nav-links li:not(:last-child) { display: none; }
-  section { padding: 4rem 1.5rem; }
-  #hero { padding: 7rem 1.5rem 4rem; }
-  .arch-grid,.ds-grid,.skills-wrap,.leader-grid,.cert-row,.early-grid { grid-template-columns: 1fr; }
-  .tl-item { grid-template-columns: 36px 1fr; gap: 1rem; }
-  .early-grid { padding-left: 0; }
-  .stack-layer { grid-template-columns: 1fr; }
+  .nav-name { font-size: 0.82rem; }
+  section { padding: 4rem 1.25rem; }
+  #hero { padding: 7rem 1.25rem 4rem; }
+  #signature { padding: 5rem 1.25rem; }
+  .hero-stats { gap: 0.85rem; }
+  .stat-box { padding: 1rem 1.25rem; }
+  .stat-n { font-size: 1.85rem; }
+  .arch-grid, .ds-grid, .skills-wrap, .leader-grid, .cert-row, .early-grid { grid-template-columns: 1fr; }
+  .stack-layer { grid-template-columns: 1fr; gap: 0.5rem; }
   .stack-arrow { padding-left: 0; }
   .stack-layer-name { text-align: left; }
+  .tl-item { grid-template-columns: 32px 1fr; gap: 0.85rem; }
+  .tl-card { padding: 1.25rem; }
+  .early-grid { padding-left: 0; }
   .edu-card { flex-direction: column; gap: 1rem; }
   .edu-div { display: none; }
+  .sig-counters { grid-template-columns: repeat(2, 1fr); }
+  .sig-achieve-grid { grid-template-columns: 1fr 1fr; }
+  .sig-skills-wrap { flex-direction: column; gap: 2rem; }
+  .sig-skills-right { flex: unset; width: 100%; display: flex; justify-content: center; }
+  #orbitCanvas { width: 400px; height: 400px; }
+  .sig-orb-1, .sig-orb-2, .sig-orb-3 { display: none; }
+}
+
+/* ===== MOBILE <= 480px (iPhone SE to Pro Max) ===== */
+@media (max-width: 480px) {
+  /* NAV */
+  nav { padding: 0 1rem; height: 56px; }
+  .nav-avatar { width: 30px; height: 30px; font-size: 0.7rem; }
+  .nav-name { display: none; }
+  .nav-links li { display: none; }
+  .nav-links li:last-child { display: list-item; }
+  .nav-cta { font-size: 0.75rem !important; padding: 0.35rem 0.85rem !important; }
+
+  /* SECTIONS */
+  section { padding: 3.5rem 1rem; }
+  #hero { padding: 6rem 1rem 3rem; }
+  #signature { padding: 4rem 1rem; }
+
+  /* HERO */
+  .hero-badge { font-size: 0.65rem; padding: 0.28rem 0.75rem; }
+  .hero-name { font-size: clamp(2.4rem, 11vw, 3.5rem); }
+  .hero-role { font-size: 0.95rem; }
+  .hero-bio { font-size: 0.92rem; }
+  .hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .stat-box { padding: 0.9rem 1rem; }
+  .stat-n { font-size: 1.6rem; }
+  .stat-l { font-size: 0.65rem; }
+  .hero-actions { flex-direction: column; }
+  .btn-fill, .btn-outline { justify-content: center; text-align: center; }
+  .hero-float-1, .hero-float-2, .hero-float-3, .hero-float-4 { display: none; }
+
+  /* SECTION HEADERS */
+  .section-title { font-size: 1.6rem; }
+  .section-sub { font-size: 0.88rem; }
+
+  /* ARCHITECTURE */
+  .arch-grid { gap: 0.85rem; }
+  .arch-card { padding: 1.5rem 1.25rem; }
+  .stack-diagram { padding: 1.5rem 1rem; }
+  .chip { font-size: 0.67rem; padding: 0.22rem 0.6rem; }
+
+  /* TIMELINE */
+  .timeline::before { left: 14px; }
+  .tl-item { grid-template-columns: 28px 1fr; gap: 0.65rem; }
+  .tl-dot { width: 12px; height: 12px; margin-top: 5px; }
+  .tl-card { padding: 1.1rem 1rem; }
+  .tl-company { font-size: 0.95rem; }
+  .tl-card-header { flex-direction: column; align-items: flex-start; gap: 0.3rem; }
+  .tl-tag { font-size: 0.6rem; }
+  .tl-bullets li { font-size: 0.82rem; }
+  .tl-group-label { padding-left: 40px; }
+  .early-grid { grid-template-columns: 1fr; gap: 0.85rem; }
+
+  /* DESIGN SYSTEM */
+  .ds-card { padding: 1.5rem; }
+  .ds-preview { padding: 1.25rem 1rem; }
+  .ds-row { flex-wrap: wrap; }
+  .ds-row-label { width: 100%; margin-bottom: 0.2rem; }
+  .p-inp { width: 100%; }
+
+  /* SKILLS */
+  .cloud { gap: 0.4rem; }
+  .cloud-tag { font-size: 0.7rem; padding: 0.35rem 0.75rem; }
+
+  /* LEADERSHIP */
+  .leader-card { padding: 1.35rem; }
+  .clients-strip { padding: 1.5rem 1rem; }
+  .clients-row { gap: 0.6rem 1.5rem; }
+  .client-name { font-size: 0.85rem; }
+
+  /* CERTIFICATIONS */
+  .cert-card { padding: 1.25rem; }
+  .edu-card { padding: 1.5rem 1.25rem; }
+  .edu-yr { font-size: 2.25rem; }
+
+  /* SIGNATURE */
+  .sig-headline { font-size: clamp(1.6rem, 8vw, 2.4rem); }
+  .sig-type-wrap { font-size: 0.95rem; }
+  .sig-counters { grid-template-columns: 1fr 1fr; gap: 1px; border-radius: 12px; margin-bottom: 2.5rem; }
+  .sig-counter { padding: 1.25rem 0.75rem; }
+  .sig-count-n { font-size: 2rem; }
+  .sig-count-l { font-size: 0.62rem; }
+  .sig-count-sub { font-size: 0.65rem; }
+  .sig-achieve-grid { grid-template-columns: 1fr; gap: 0.85rem; margin-bottom: 2.5rem; }
+  .sig-achieve-card { padding: 1.4rem 1.25rem; }
+  .sig-skills-wrap { flex-direction: column; gap: 2rem; }
+  .sig-skills-right { width: 100%; display: flex; justify-content: center; }
+  #orbitCanvas { width: 340px; height: 340px; }
+  .sig-traits { gap: 0.4rem; }
+  .sig-trait { font-size: 0.75rem; padding: 0.35rem 0.8rem; }
+  .sig-quote-text { font-size: 0.9rem; }
+
+  /* CONTACT */
+  #contact { padding: 4rem 1rem; }
+  .contact-pills { flex-direction: column; align-items: center; gap: 0.6rem; }
+  .contact-pill { width: 100%; max-width: 300px; justify-content: center; }
+}
+
+/* ══════════════════════════════════════════
+   ARCH CARD POPUP SYSTEM
+══════════════════════════════════════════ */
+.arch-card { cursor: pointer; position: relative; }
+.arch-card-hint {
+  position: absolute; bottom: 1rem; right: 1rem;
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--accent); opacity: 0; transition: opacity 0.25s;
+  display: flex; align-items: center; gap: 0.3rem;
+}
+.arch-card-hint::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+.arch-card:hover .arch-card-hint { opacity: 1; }
+
+/* Overlay */
+.arch-popup-overlay {
+  position: fixed; inset: 0; z-index: 1000;
+  background: rgba(26,25,23,0.55);
+  backdrop-filter: blur(6px);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s ease;
+  display: flex; align-items: center; justify-content: center;
+  padding: 1.5rem;
+}
+.arch-popup-overlay.open { opacity: 1; pointer-events: all; }
+
+/* Popup box */
+.arch-popup {
+  background: #fff; border-radius: 20px;
+  width: 100%; max-width: 680px;
+  box-shadow: 0 32px 80px rgba(26,25,23,0.18), 0 0 0 1px rgba(26,25,23,0.06);
+  overflow: hidden;
+  transform: translateY(24px) scale(0.97);
+  transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease;
+  opacity: 0;
+  max-height: 90vh; overflow-y: auto;
+}
+.arch-popup-overlay.open .arch-popup { transform: none; opacity: 1; }
+
+/* Popup header */
+.ap-header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  padding: 1.75rem 2rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  gap: 1rem;
+}
+.ap-header-left { flex: 1; }
+.ap-icon-big {
+  width: 52px; height: 52px; border-radius: 14px;
+  background: var(--accent-lt);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; margin-bottom: 0.75rem;
+}
+.ap-title { font-size: 1.35rem; font-weight: 800; color: var(--text); letter-spacing: -0.02em; margin-bottom: 0.4rem; line-height: 1.25; }
+.ap-subtitle { font-family: var(--serif); font-style: italic; font-size: 0.97rem; color: var(--muted); line-height: 1.55; }
+.ap-close {
+  width: 38px; height: 38px; border-radius: 10px;
+  background: var(--bg3); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; flex-shrink: 0;
+  font-size: 1rem; color: var(--muted);
+  transition: all 0.2s;
+}
+.ap-close:hover { background: var(--text); color: #fff; }
+
+/* Popup canvas area */
+.ap-canvas-wrap {
+  background: var(--bg); border-bottom: 1px solid var(--border);
+  padding: 1.75rem 2rem; min-height: 200px;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.ap-canvas-wrap canvas { display: block; max-width: 100%; }
+
+/* Popup body */
+.ap-body { padding: 1.75rem 2rem 2rem; }
+.ap-steps { display: flex; flex-direction: column; gap: 0.85rem; }
+.ap-step {
+  display: flex; gap: 1rem; align-items: flex-start;
+  padding: 1rem 1.1rem; border-radius: 11px;
+  background: var(--bg); border: 1px solid var(--border);
+  transition: all 0.2s;
+}
+.ap-step:hover { border-color: rgba(45,106,143,0.3); background: var(--accent-lt); }
+.ap-step-num {
+  width: 30px; height: 30px; border-radius: 9px;
+  background: var(--accent); color: #fff;
+  font-size: 0.82rem; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px;
+}
+.ap-step-text { flex: 1; }
+.ap-step-text strong { font-size: 0.95rem; font-weight: 700; color: var(--text); display: block; margin-bottom: 0.25rem; line-height: 1.3; }
+.ap-step-text span { font-size: 0.875rem; color: var(--muted); line-height: 1.6; display: block; }
+.ap-tags { display: flex; gap: 0.45rem; flex-wrap: wrap; margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--border); }
+.ap-tag {
+  font-size: 0.74rem; font-weight: 700; padding: 0.3rem 0.75rem; border-radius: 100px;
+  background: var(--accent-lt); color: var(--accent); border: 1px solid rgba(45,106,143,0.2);
+  letter-spacing: 0.01em;
+}
+
+/* Mobile popup */
+@media (max-width: 480px) {
+  .arch-popup { border-radius: 16px; max-height: 88vh; }
+  .ap-header { padding: 1.25rem 1.25rem 1rem; }
+  .ap-title { font-size: 1.15rem; }
+  .ap-subtitle { font-size: 0.88rem; }
+  .ap-canvas-wrap { padding: 1.25rem 1rem; min-height: 160px; }
+  .ap-body { padding: 1.25rem 1.25rem 1.5rem; }
+  .ap-step { padding: 0.85rem 0.9rem; gap: 0.75rem; }
+  .ap-step-text strong { font-size: 0.9rem; }
+  .ap-step-text span { font-size: 0.82rem; }
 }
 </style>
 </head>
@@ -694,17 +916,17 @@ section { padding: 6rem 3.5rem; position: relative; z-index: 1; }
     <div class="section-eyebrow reveal">Architecture Philosophy</div>
     <h2 class="section-title reveal">Decisions That Scale</h2>
     <p class="section-sub reveal">Proven architectural approaches to enterprise frontend challenges — from organisational scalability to cross-team consistency.</p>
-    <div class="arch-grid reveal">
-      <div class="arch-card"><div class="arch-icon-wrap">⬡</div><div class="arch-card-title">Micro-Frontend Strategy</div><div class="arch-card-desc">Decomposing monolithic UIs into independently deployable, team-owned frontends using Module Federation and NX monorepos — enabling true organisational scale.</div><div class="arch-chip">Scalability</div></div>
-      <div class="arch-card"><div class="arch-icon-wrap">◈</div><div class="arch-card-title">Atomic Design Systems</div><div class="arch-card-desc">Building hierarchical component libraries from tokens to organisms — enforcing consistency across multi-brand platforms spanning global markets.</div><div class="arch-chip">Consistency</div></div>
-      <div class="arch-card"><div class="arch-icon-wrap">⚡</div><div class="arch-card-title">Performance Engineering</div><div class="arch-card-desc">Systematically optimising Core Web Vitals — LCP, CLS, FID — through bundle splitting, edge rendering, and component-level profiling for enterprise-grade performance.</div><div class="arch-chip">Performance</div></div>
-      <div class="arch-card"><div class="arch-icon-wrap">📦</div><div class="arch-card-title">Monorepo Architecture</div><div class="arch-card-desc">Governing large codebases with Turborepo and NX — enforcing shared conventions, dependency graphs, and build pipelines across distributed engineering teams.</div><div class="arch-chip">Governance</div></div>
-      <div class="arch-card"><div class="arch-icon-wrap">🤖</div><div class="arch-card-title">AI-Native Integration</div><div class="arch-card-desc">Architecting GenAI-powered products like BidGPT on Azure OpenAI — bridging LLM capabilities with enterprise-grade frontend platforms through prompt engineering.</div><div class="arch-chip">Innovation</div></div>
-      <div class="arch-card"><div class="arch-icon-wrap">📋</div><div class="arch-card-title">HLD / LLD Documentation</div><div class="arch-card-desc">Translating architecture decisions into high and low-level design documents — creating living references that onboard teams and maintain long-term clarity.</div><div class="arch-chip">Documentation</div></div>
+    <div class="arch-grid">
+      <div class="arch-card" data-popup="microfrontend"><div class="arch-icon-wrap">⬡</div><div class="arch-card-title">Micro-Frontend Strategy</div><div class="arch-card-desc">Decomposing monolithic UIs into independently deployable, team-owned frontends using Module Federation and NX monorepos — enabling true organisational scale.</div><div class="arch-chip">Scalability</div><div class="arch-card-hint">View diagram</div></div>
+      <div class="arch-card" data-popup="designsystem"><div class="arch-icon-wrap">◈</div><div class="arch-card-title">Atomic Design Systems</div><div class="arch-card-desc">Building hierarchical component libraries from tokens to organisms — enforcing consistency across multi-brand platforms spanning global markets.</div><div class="arch-chip">Consistency</div><div class="arch-card-hint">View diagram</div></div>
+      <div class="arch-card" data-popup="performance"><div class="arch-icon-wrap">⚡</div><div class="arch-card-title">Performance Engineering</div><div class="arch-card-desc">Systematically optimising Core Web Vitals — LCP, CLS, FID — through bundle splitting, edge rendering, and component-level profiling for enterprise-grade performance.</div><div class="arch-chip">Performance</div><div class="arch-card-hint">View diagram</div></div>
+      <div class="arch-card" data-popup="monorepo"><div class="arch-icon-wrap">📦</div><div class="arch-card-title">Monorepo Architecture</div><div class="arch-card-desc">Governing large codebases with Turborepo and NX — enforcing shared conventions, dependency graphs, and build pipelines across distributed engineering teams.</div><div class="arch-chip">Governance</div><div class="arch-card-hint">View diagram</div></div>
+      <div class="arch-card" data-popup="ai"><div class="arch-icon-wrap">🤖</div><div class="arch-card-title">AI-Native Integration</div><div class="arch-card-desc">Architecting GenAI-powered products like BidGPT on Azure OpenAI — bridging LLM capabilities with enterprise-grade frontend platforms through prompt engineering.</div><div class="arch-chip">Innovation</div><div class="arch-card-hint">View diagram</div></div>
+      <div class="arch-card" data-popup="hld"><div class="arch-icon-wrap">📋</div><div class="arch-card-title">HLD / LLD Documentation</div><div class="arch-card-desc">Translating architecture decisions into high and low-level design documents — creating living references that onboard teams and maintain long-term clarity.</div><div class="arch-chip">Documentation</div><div class="arch-card-hint">View diagram</div></div>
     </div>
     <div class="stack-diagram reveal">
       <div class="stack-title-row"><span class="stack-label-text">// Enterprise Frontend Architecture Stack</span><span class="stack-title-line"></span></div>
-      <div class="stack-layer"><div class="stack-layer-name">Presentation</div><div class="stack-chips"><span class="chip chip-teal">React.js</span><span class="chip chip-teal">Next.js</span><span class="chip chip-teal">TypeScript</span><span class="chip chip-teal">Tailwind CSS</span><span class="chip chip-teal">Material UI</span></div></div>
+      <div class="stack-layer"><div class="stack-layer-name">Presentation</div><div class="stack-chips"><span class="chip chip-teal">React.js</span><span class="chip chip-teal">Next.js</span><span class="chip chip-teal">TypeScript</span><span class="chip chip-teal">Tailwind CSS</span><span class="chip chip-teal">Material UI</span><span class="chip chip-teal">JavaScript</span><span class="chip chip-teal">ES6+</span><span class="chip chip-teal">AngularJS</span><span class="chip chip-teal">Vue.js</span><span class="chip chip-teal">Web Components</span><span class="chip chip-teal">UI Development</span></div></div>
       <div class="stack-arrow">↓</div>
       <div class="stack-layer"><div class="stack-layer-name">Architecture</div><div class="stack-chips"><span class="chip chip-blue">Micro-Frontends</span><span class="chip chip-blue">Atomic Design</span><span class="chip chip-blue">Monorepo (NX)</span><span class="chip chip-blue">Turborepo</span></div></div>
       <div class="stack-arrow">↓</div>
@@ -918,7 +1140,7 @@ section { padding: 6rem 3.5rem; position: relative; z-index: 1; }
         <div class="skill-gh">Frontend & Architecture</div>
         <div class="skill-rows">
           <div><div class="skill-rh"><span class="skill-rn">React.js / Next.js</span><span class="skill-rp">98%</span></div><div class="skill-track"><div class="skill-fill" data-w="0.98"></div></div></div>
-          <div><div class="skill-rh"><span class="skill-rn">TypeScript</span><span class="skill-rp">96%</span></div><div class="skill-track"><div class="skill-fill" data-w="0.96"></div></div></div>
+          <div><div class="skill-rh"><span class="skill-rn">TypeScript / ES6+</span><span class="skill-rp">96%</span></div><div class="skill-track"><div class="skill-fill" data-w="0.96"></div></div></div>
           <div><div class="skill-rh"><span class="skill-rn">Micro-Frontend Architecture</span><span class="skill-rp">95%</span></div><div class="skill-track"><div class="skill-fill" data-w="0.95"></div></div></div>
           <div><div class="skill-rh"><span class="skill-rn">Design Systems</span><span class="skill-rp">97%</span></div><div class="skill-track"><div class="skill-fill" data-w="0.97"></div></div></div>
           <div><div class="skill-rh"><span class="skill-rn">Node.js / GraphQL</span><span class="skill-rp">88%</span></div><div class="skill-track"><div class="skill-fill" data-w="0.88"></div></div></div>
@@ -935,12 +1157,13 @@ section { padding: 6rem 3.5rem; position: relative; z-index: 1; }
         </div>
       </div>
     </div>
+
     <div class="cloud reveal">
       <div class="cloud-tag">Vite</div><div class="cloud-tag">Webpack</div><div class="cloud-tag">Redux</div>
       <div class="cloud-tag">Zustand</div><div class="cloud-tag">Storybook</div><div class="cloud-tag">Jest</div>
       <div class="cloud-tag">Cypress</div><div class="cloud-tag">NX</div><div class="cloud-tag">Turborepo</div>
       <div class="cloud-tag">PostgreSQL</div><div class="cloud-tag">MongoDB</div><div class="cloud-tag">SAP Hybris</div>
-      <div class="cloud-tag">React Native</div><div class="cloud-tag">Angular</div><div class="cloud-tag">Web Components</div>
+      <div class="cloud-tag">React Native</div><div class="cloud-tag">Angular</div>
       <div class="cloud-tag">PWA</div><div class="cloud-tag">Edge Rendering</div><div class="cloud-tag">Prompt Engineering</div>
       <div class="cloud-tag">Drupal</div><div class="cloud-tag">Express.js</div><div class="cloud-tag">Contentful</div>
     </div>
@@ -1106,7 +1329,7 @@ section { padding: 6rem 3.5rem; position: relative; z-index: 1; }
         </div>
       </div>
       <div class="sig-skills-right">
-        <canvas id="orbitCanvas" width="340" height="340"></canvas>
+        <canvas id="orbitCanvas" width="480" height="480"></canvas>
       </div>
     </div>
   </div>
@@ -1231,53 +1454,1221 @@ acFills.forEach(f => acObs.observe(f));
 const canvas = document.getElementById("orbitCanvas");
 if (canvas) {
   const ctx = canvas.getContext("2d");
-  const W = 340, H = 340, cx = W/2, cy = H/2;
+
+  /* Canvas size tiers */
+  function getSize() {
+    return window.innerWidth <= 480 ? 340 : window.innerWidth <= 900 ? 400 : 480;
+  }
+  function resizeCanvas() {
+    const s = getSize();
+    canvas.width  = s; canvas.height = s;
+    canvas.style.width  = s + "px"; canvas.style.height = s + "px";
+  }
+  resizeCanvas();
+  window.addEventListener("resize", resizeCanvas, { passive: true });
+
+  /* Skill nodes — orbits defined as fractions of canvas radius */
+  /* r values are FRACTIONS of (canvasSize/2 - labelPad)        */
+  const LABEL_PAD = 34;  /* px reserved at edge for label text  */
   const skills = [
-    { label:"React",      r:95,  speed:0.009,  angle:0,           color:"#61DAFB", size:12 },
-    { label:"Next.js",    r:95,  speed:0.009,  angle:Math.PI,     color:"#E2E8F0", size:11 },
-    { label:"TypeScript", r:128, speed:0.006,  angle:0.5,         color:"#5B9BD5", size:11 },
-    { label:"GraphQL",    r:128, speed:0.006,  angle:2.6,         color:"#E535AB", size:10 },
-    { label:"NX",         r:128, speed:0.006,  angle:4.8,         color:"#7CB9E8", size:10 },
-    { label:"Node.js",    r:153, speed:0.0035, angle:1.0,         color:"#68A063", size:10 },
-    { label:"AEM",        r:153, speed:0.0035, angle:3.1,         color:"#FA6C6C", size:10 },
-    { label:"Azure",      r:153, speed:0.0035, angle:5.2,         color:"#5BA8D0", size:10 },
-    { label:"Tailwind",   r:153, speed:0.0035, angle:2.0,         color:"#38BDF8", size:10 },
+    { label:"React",      orbit:0.42, speed:0.009,  angle:0,        color:"#61DAFB" },
+    { label:"Next.js",    orbit:0.42, speed:0.009,  angle:Math.PI,  color:"#E2E8F0" },
+    { label:"TypeScript", orbit:0.60, speed:0.006,  angle:0.5,      color:"#5B9BD5" },
+    { label:"GraphQL",    orbit:0.60, speed:0.006,  angle:2.6,      color:"#E535AB" },
+    { label:"NX",         orbit:0.60, speed:0.006,  angle:4.8,      color:"#7CB9E8" },
+    { label:"Node.js",    orbit:0.78, speed:0.0035, angle:1.0,      color:"#68A063" },
+    { label:"AEM",        orbit:0.78, speed:0.0035, angle:3.1,      color:"#FA6C6C" },
+    { label:"Azure",      orbit:0.78, speed:0.0035, angle:5.2,      color:"#5BA8D0" },
+    { label:"Tailwind",   orbit:0.78, speed:0.0035, angle:2.0,      color:"#38BDF8" },
   ];
+
   function drawOrbit() {
-    ctx.clearRect(0,0,W,H);
-    [95,128,153].forEach((r,i) => {
-      ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2);
-      ctx.strokeStyle = "rgba(45,106,143,"+(0.15-i*0.03)+")";
-      ctx.lineWidth=1; ctx.setLineDash([3,9]); ctx.stroke(); ctx.setLineDash([]);
+    const S  = canvas.width;
+    const cx = S / 2, cy = S / 2;
+    /* Maximum radius so labels always stay within canvas */
+    const maxR = S / 2 - LABEL_PAD;
+    /* Scale factor for dot/glow sizes relative to canvas */
+    const sc = S / 400;
+
+    ctx.clearRect(0, 0, S, S);
+
+    /* ── Orbit rings ── */
+    [0.42, 0.60, 0.78].forEach((frac, i) => {
+      const r = frac * maxR;
+      ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.strokeStyle = "rgba(45,106,143," + (0.18 - i * 0.03) + ")";
+      ctx.lineWidth = 1; ctx.setLineDash([3, 9]); ctx.stroke(); ctx.setLineDash([]);
     });
-    const grd = ctx.createRadialGradient(cx,cy,0,cx,cy,52);
-    grd.addColorStop(0,"rgba(45,106,143,0.40)"); grd.addColorStop(1,"rgba(45,106,143,0.02)");
-    ctx.beginPath(); ctx.arc(cx,cy,52,0,Math.PI*2); ctx.fillStyle=grd; ctx.fill();
-    ctx.beginPath(); ctx.arc(cx,cy,38,0,Math.PI*2);
-    ctx.strokeStyle="rgba(45,106,143,0.6)"; ctx.lineWidth=1.5; ctx.stroke();
-    ctx.textAlign="center"; ctx.textBaseline="middle";
-    ctx.font="bold 15px Plus Jakarta Sans,sans-serif"; ctx.fillStyle="#FFFFFF";
-    ctx.fillText("SRB",cx,cy-8);
-    ctx.font="700 9px Plus Jakarta Sans,sans-serif"; ctx.fillStyle="rgba(91,168,208,0.9)";
-    ctx.fillText("15 YRS",cx,cy+9);
+
+    /* ── Centre hub ── */
+    const hubR  = 38 * sc;
+    const glowR = 52 * sc;
+    const grd = ctx.createRadialGradient(cx, cy, 0, cx, cy, glowR);
+    grd.addColorStop(0, "rgba(45,106,143,0.45)");
+    grd.addColorStop(1, "rgba(45,106,143,0.02)");
+    ctx.beginPath(); ctx.arc(cx, cy, glowR, 0, Math.PI * 2);
+    ctx.fillStyle = grd; ctx.fill();
+    ctx.beginPath(); ctx.arc(cx, cy, hubR, 0, Math.PI * 2);
+    ctx.strokeStyle = "rgba(45,106,143,0.65)"; ctx.lineWidth = 1.5; ctx.stroke();
+    ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    ctx.font = "bold " + Math.round(15 * sc) + "px Plus Jakarta Sans,sans-serif";
+    ctx.fillStyle = "#FFFFFF";
+    ctx.fillText("SRB", cx, cy - 7 * sc);
+    ctx.font = "700 " + Math.round(10 * sc) + "px Plus Jakarta Sans,sans-serif";
+    ctx.fillStyle = "rgba(91,168,208,0.9)";
+    ctx.fillText("15 YRS", cx, cy + 9 * sc);
+
+    /* ── Skill nodes ── */
     skills.forEach(s => {
       s.angle += s.speed;
-      const x=cx+Math.cos(s.angle)*s.r, y=cy+Math.sin(s.angle)*s.r;
-      ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(x,y);
-      ctx.strokeStyle="rgba(45,106,143,0.07)"; ctx.lineWidth=1; ctx.stroke();
-      const ng=ctx.createRadialGradient(x,y,0,x,y,16);
-      ng.addColorStop(0,s.color+"50"); ng.addColorStop(1,"transparent");
-      ctx.beginPath(); ctx.arc(x,y,16,0,Math.PI*2); ctx.fillStyle=ng; ctx.fill();
-      ctx.beginPath(); ctx.arc(x,y,5,0,Math.PI*2); ctx.fillStyle=s.color; ctx.fill();
-      const lx=cx+Math.cos(s.angle)*(s.r+24), ly=cy+Math.sin(s.angle)*(s.r+24);
-      ctx.font="600 "+s.size+"px Plus Jakarta Sans,sans-serif";
-      ctx.fillStyle="rgba(255,255,255,0.75)"; ctx.textAlign="center"; ctx.textBaseline="middle";
-      ctx.fillText(s.label,lx,ly);
+      const r  = s.orbit * maxR;
+      const x  = cx + Math.cos(s.angle) * r;
+      const y  = cy + Math.sin(s.angle) * r;
+
+      /* spoke line */
+      ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(x, y);
+      ctx.strokeStyle = "rgba(45,106,143,0.08)"; ctx.lineWidth = 1; ctx.stroke();
+
+      /* glow halo */
+      const dotR  = 5.5 * sc;
+      const haloR = 16 * sc;
+      const ng = ctx.createRadialGradient(x, y, 0, x, y, haloR);
+      ng.addColorStop(0, s.color + "55"); ng.addColorStop(1, "transparent");
+      ctx.beginPath(); ctx.arc(x, y, haloR, 0, Math.PI * 2);
+      ctx.fillStyle = ng; ctx.fill();
+
+      /* dot */
+      ctx.beginPath(); ctx.arc(x, y, dotR, 0, Math.PI * 2);
+      ctx.fillStyle = s.color; ctx.fill();
+
+      /* label — placed outside the dot, clamped inside canvas */
+      const labelDist = r + 20 * sc;
+      const rawLx = cx + Math.cos(s.angle) * labelDist;
+      const rawLy = cy + Math.sin(s.angle) * labelDist;
+      /* clamp so text never exits canvas */
+      const fontSize = Math.round(13 * sc);
+      const halfW    = ctx.measureText(s.label).width / 2 + 2;
+      const lx = Math.max(halfW, Math.min(S - halfW, rawLx));
+      const ly = Math.max(fontSize, Math.min(S - fontSize, rawLy));
+
+      ctx.font = "600 " + fontSize + "px Plus Jakarta Sans,sans-serif";
+      ctx.fillStyle  = "rgba(255,255,255,0.85)";
+      ctx.textAlign  = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(s.label, lx, ly);
     });
+
     requestAnimationFrame(drawOrbit);
   }
   drawOrbit();
 }
 </script>
+
+<!-- ══ ARCH POPUP OVERLAY ══ -->
+<div class="arch-popup-overlay" id="archOverlay">
+  <div class="arch-popup" id="archPopup">
+    <div class="ap-header">
+      <div class="ap-header-left">
+        <div class="ap-icon-big" id="apIcon"></div>
+        <div class="ap-title" id="apTitle"></div>
+        <div class="ap-subtitle" id="apSubtitle"></div>
+      </div>
+      <div class="ap-close" id="apClose">&#x2715;</div>
+    </div>
+    <div class="ap-canvas-wrap">
+      <canvas id="apCanvas"></canvas>
+    </div>
+    <div class="ap-body">
+      <div class="ap-steps" id="apSteps"></div>
+      <div class="ap-tags" id="apTags"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+'use strict';
+
+/* ── palette ── */
+var AC='#2D6A8F', ACL='#EBF4FA', GOLD='#B07D3A', GRN='#2E7D5E',
+    TX='#1A1917', MU='#7A7670', BD='#E4E1D8';
+
+/* ════════════════════════════════════
+   CANVAS DRAW FUNCTIONS
+════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════
+   SHARED ANIMATION HELPERS
+═══════════════════════════════════════════════════════════ */
+function easeOutCubic(t) { return 1 - Math.pow(1 - Math.min(1, Math.max(0, t)), 3); }
+function easeOutBack(t) {
+  var c1=1.70158, c3=c1+1;
+  return 1 + c3*Math.pow(t-1,3) + c1*Math.pow(t-1,2);
+}
+function lerp(a,b,t){ return a+(b-a)*t; }
+
+/* Generic hover-lift pool — keyed by string id */
+var _hoverPool = {};
+function smoothLift(key, isHovered) {
+  if (_hoverPool[key] === undefined) _hoverPool[key] = 0;
+  _hoverPool[key] += ((isHovered ? 1 : 0) - _hoverPool[key]) * 0.16;
+  return _hoverPool[key];
+}
+function resetHoverPool() { _hoverPool = {}; }
+
+/* ═══════════════════════════════════════════════════════════
+   1. MICRO-FRONTEND STRATEGY
+   Animated pipeline: teams flow into shell then compose page
+═══════════════════════════════════════════════════════════ */
+var _mfState = { animStart: null, hovered: null };
+
+var MF_TEAMS = [
+  { label:'Team Cart',    sub:'Cart MFE',    color:'#2D6A8F', bg:'#EBF4FA' },
+  { label:'Team Search',  sub:'Search MFE',  color:'#B07D3A', bg:'#FDF5E8' },
+  { label:'Team Profile', sub:'Profile MFE', color:'#2E7D5E', bg:'#E8F5EE' }
+];
+
+function drawMicrofrontend(ctx, w, h, frame) {
+  if (_mfState.animStart === null) _mfState.animStart = frame;
+  var el = frame - _mfState.animStart;
+  ctx.clearRect(0, 0, w, h);
+
+  /* ── Layout: fixed zones so nothing overlaps ──
+     Zone A: shell header label        y = 0  .. 22
+     Zone B: shell container + boxes   y = 22 .. 22+shellH
+     Zone C: dashed lines + arrow dot  y = B_bottom .. arrowY2
+     Zone D: composed page bar         y = arrowY2+8 .. h-12
+  */
+  var pad    = 18;
+  var cols   = MF_TEAMS.length;
+  var gapX   = 14;
+  var teamW  = (w - pad*2 - gapX*(cols-1)) / cols;
+
+  var headerH = 22;                           /* shell title row   */
+  var shellPad = 10;                          /* inner shell pad   */
+  var teamH   = Math.round(h * 0.30);
+  var shellY  = headerH;                      /* shell box starts below label */
+  var teamY   = shellY + shellPad + 2;        /* boxes inside shell */
+  var shellH  = teamH + shellPad * 2 + 4;
+  var shellW  = w - pad*2 + 16;
+  var shellX  = pad - 8;
+
+  var arrowY1 = shellY + shellH + 4;
+  var pgH     = Math.round(h * 0.12);
+  var pgY     = h - pgH - 10;
+  var arrowY2 = pgY - 10;
+
+  /* ── Shell container ── */
+  var shellT = easeOutCubic(Math.min(1, el / 20));
+  ctx.save();
+  ctx.globalAlpha = shellT;
+
+  /* header label ABOVE shell box */
+  ctx.font = '600 11px Plus Jakarta Sans,sans-serif';
+  ctx.fillStyle = '#6B7A99'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillText('Shell Application — Host (Module Federation)', w/2, headerH/2);
+  ctx.textBaseline = 'alphabetic';
+
+  /* shell box */
+  ctx.shadowColor = 'rgba(0,0,0,0.06)'; ctx.shadowBlur = 10; ctx.shadowOffsetY = 3;
+  ctx.beginPath(); ctx.roundRect(shellX, shellY, shellW, shellH, 12);
+  ctx.fillStyle = '#F4F6FA'; ctx.fill();
+  ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
+  ctx.strokeStyle = '#C8D4E8'; ctx.lineWidth = 1.5; ctx.stroke();
+  ctx.restore();
+
+  /* ── Team boxes ── staggered entrance from top */
+  MF_TEAMS.forEach(function(t, i) {
+    var delay  = 12 + i * 8;
+    var rawT   = Math.max(0, Math.min(1.3, (el - delay) / 22));
+    var scaleT = easeOutBack(Math.min(1, rawT));
+    var alpha  = Math.min(1, rawT);
+    var x      = pad + i * (teamW + gapX);
+    var hover  = smoothLift('mf_team_'+i, _mfState.hovered === i);
+    var liftY  = hover * 5;
+
+    ctx.save();
+    ctx.globalAlpha = alpha;
+
+    /* scale in from box centre */
+    var boxCX = x + teamW/2, boxCY = teamY + teamH/2;
+    ctx.translate(boxCX, boxCY);
+    ctx.scale(scaleT, scaleT);
+    ctx.translate(-boxCX, -boxCY);
+
+    ctx.shadowColor   = t.color + (hover > 0.3 ? 'AA' : '28');
+    ctx.shadowBlur    = hover > 0 ? lerp(5, 16, hover) : 4;
+    ctx.shadowOffsetY = lerp(1, 5, hover);
+
+    ctx.beginPath(); ctx.roundRect(x, teamY - liftY, teamW, teamH, 10);
+    ctx.fillStyle = t.bg; ctx.fill();
+    ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
+    ctx.strokeStyle = t.color + (hover > 0.3 ? 'CC' : '60');
+    ctx.lineWidth   = hover > 0.3 ? 2 : 1.3; ctx.stroke();
+
+    /* team name — top of box */
+    ctx.font = '700 13px Plus Jakarta Sans,sans-serif';
+    ctx.fillStyle = t.color; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(t.label, x + teamW/2, teamY - liftY + teamH*0.30);
+
+    /* sub-label */
+    ctx.font = '500 11px Plus Jakarta Sans,sans-serif';
+    ctx.fillStyle = t.color + 'AA';
+    ctx.fillText(t.sub, x + teamW/2, teamY - liftY + teamH*0.52);
+
+    /* deploy badge — bottom of box */
+    var badgeW = Math.min(teamW - 20, 80);
+    var badgeH = 18;
+    var badgeX = x + (teamW - badgeW)/2;
+    var badgeY = teamY - liftY + teamH - badgeH - 8;
+    ctx.beginPath(); ctx.roundRect(badgeX, badgeY, badgeW, badgeH, 9);
+    ctx.fillStyle = t.color + '20'; ctx.fill();
+    ctx.strokeStyle = t.color + '40'; ctx.lineWidth = 1; ctx.stroke();
+    ctx.font = '700 10px Plus Jakarta Sans,sans-serif'; ctx.fillStyle = t.color;
+    ctx.fillText('⚡ Deploy CI', x + teamW/2, badgeY + badgeH/2);
+
+    ctx.textBaseline = 'alphabetic';
+    ctx.restore();
+  });
+
+  /* ── Animated data flow dots ── */
+  var flowT = Math.max(0, el - 45);
+  if (flowT > 0) {
+    var dotProgress = (flowT % 40) / 40;
+    MF_TEAMS.forEach(function(t, i) {
+      var dcx = pad + i*(teamW+gapX) + teamW/2;
+      var startDotY = teamY + teamH + 2;
+      var dy  = lerp(startDotY, arrowY2, dotProgress);
+      var dAlpha = dotProgress < 0.15 ? dotProgress/0.15 :
+                   dotProgress > 0.75 ? (1-dotProgress)/0.25 : 1;
+      ctx.save();
+      ctx.globalAlpha = dAlpha * easeOutCubic(Math.min(1, flowT/20));
+      ctx.shadowColor = t.color + '80'; ctx.shadowBlur = 6;
+      ctx.beginPath(); ctx.arc(dcx, dy, 4.5, 0, Math.PI*2);
+      ctx.fillStyle = t.color; ctx.fill();
+      ctx.restore();
+    });
+  }
+
+  /* ── Dashed vertical lines ── */
+  var arrowT = easeOutCubic(Math.max(0, (el-30)/25));
+  if (arrowT > 0) {
+    MF_TEAMS.forEach(function(t, i) {
+      var lcx = pad + i*(teamW+gapX) + teamW/2;
+      ctx.save();
+      ctx.globalAlpha = arrowT * 0.5;
+      ctx.beginPath(); ctx.moveTo(lcx, arrowY1); ctx.lineTo(lcx, arrowY2);
+      ctx.strokeStyle = t.color; ctx.lineWidth = 1.5;
+      ctx.setLineDash([4,4]); ctx.stroke(); ctx.setLineDash([]);
+      ctx.restore();
+    });
+    /* chevron arrow head pointing down to page */
+    ctx.save(); ctx.globalAlpha = arrowT;
+    ctx.beginPath();
+    ctx.moveTo(w/2-7, arrowY2-8); ctx.lineTo(w/2, arrowY2-1); ctx.lineTo(w/2+7, arrowY2-8);
+    ctx.strokeStyle = '#2D6A8F'; ctx.lineWidth = 2.5;
+    ctx.lineJoin = 'round'; ctx.stroke();
+    ctx.restore();
+  }
+
+  /* ── Composed page bar ── */
+  var pageT = easeOutCubic(Math.max(0, (el-48)/22));
+  if (pageT > 0) {
+    ctx.save();
+    ctx.globalAlpha = pageT;
+    ctx.shadowColor = '#2D6A8F28'; ctx.shadowBlur = 10; ctx.shadowOffsetY = 3;
+    ctx.beginPath(); ctx.roundRect(pad, pgY, w - pad*2, pgH, 10);
+    ctx.fillStyle = '#EBF4FA'; ctx.fill();
+    ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
+    ctx.strokeStyle = '#2D6A8FAA'; ctx.lineWidth = 1.5; ctx.stroke();
+    ctx.font = '700 13px Plus Jakarta Sans,sans-serif';
+    ctx.fillStyle = '#2D6A8F'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText('Composed Page — Assembled & Served to User', w/2, pgY + pgH/2);
+    ctx.textBaseline = 'alphabetic';
+    ctx.restore();
+  }
+
+  ctx.globalAlpha = 1;
+}
+
+function attachMFHover(canvas, w, h) {
+  var pad = 20, cols = 3, gapX = 12;
+  var teamW = (w - pad*2 - gapX*(cols-1)) / cols;
+  var teamH = Math.round(h*0.28), teamY = Math.round(h*0.05);
+
+  canvas.addEventListener('mousemove', function(e) {
+    var rect = canvas.getBoundingClientRect();
+    var mx = (e.clientX - rect.left) * (canvas.width / rect.width);
+    var my = (e.clientY - rect.top)  * (canvas.height / rect.height);
+    var hit = null;
+    for (var i = 0; i < cols; i++) {
+      var x = pad + i*(teamW+gapX);
+      if (mx >= x && mx <= x+teamW && my >= teamY && my <= teamY+teamH) { hit = i; break; }
+    }
+    _mfState.hovered = hit;
+    canvas.style.cursor = hit !== null ? 'pointer' : 'default';
+  });
+  canvas.addEventListener('mouseleave', function() {
+    _mfState.hovered = null;
+    canvas.style.cursor = 'default';
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════
+   DESIGN SYSTEM — already defined, keeping state block here
+═══════════════════════════════════════════════════════════ */
+var _dsState = {
+  hovered:   null,
+  liftAnim:  {},
+  animStart: null
+};
+
+var DS_LABEL_W = 96;
+var DS_PAD_R   = 16;
+var DS_GAP_X   = 10;
+var DS_GAP_Y   = 12;
+var DS_PAD_TOP = 14;
+var DS_RADIUS  = 11;
+
+var DS_LEVELS = [
+  { label:'Tokens',    items:['Color','Spacing','Type','Motion'], bg:'#EEEEFF', border:'#BABDE8', text:'#4248B8' },
+  { label:'Atoms',     items:['Button','Input','Badge','Icon'],   bg:'#E3EFEF', border:'#9EC4C4', text:'#2A6F6F' },
+  { label:'Molecules', items:['SearchBar','FormField','Card'],    bg:'#FDF0E0', border:'#DEB97A', text:'#9A5E08' },
+  { label:'Organisms', items:['Header','DataTable','Modal'],      bg:'#E5F3EB', border:'#96C8AA', text:'#276645' }
+];
+
+function dsLayout(w, h) {
+  var gridX = DS_LABEL_W, gridW = w - DS_LABEL_W - DS_PAD_R;
+  var rowH  = Math.floor((h - DS_PAD_TOP*2 - DS_GAP_Y*3) / 4);
+  return { gridX:gridX, gridW:gridW, rowH:rowH };
+}
+function dsRowY(li, rowH) { return DS_PAD_TOP + li*(rowH+DS_GAP_Y); }
+function dsItemRect(ii, ic, gridX, gridW, y, rowH) {
+  var itemW = (gridW - DS_GAP_X*(ic-1)) / ic;
+  return { x: gridX + ii*(itemW+DS_GAP_X), y:y, w:itemW, h:rowH };
+}
+
+function drawDesignSystem(ctx, w, h, frame) {
+  if (_dsState.animStart === null) _dsState.animStart = frame;
+  var elapsed = frame - _dsState.animStart;
+  ctx.clearRect(0, 0, w, h);
+  var lay = dsLayout(w, h);
+  DS_LEVELS.forEach(function(lv, li) {
+    var rowDelay = li * 9;
+    var rowEase  = easeOutCubic((elapsed - rowDelay) / 30);
+    var baseY    = dsRowY(li, lay.rowH);
+    var ic       = lv.items.length;
+    ctx.save();
+    ctx.globalAlpha = rowEase;
+    ctx.font = '700 12px Plus Jakarta Sans,sans-serif';
+    ctx.fillStyle = lv.text; ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+    ctx.fillText(lv.label, DS_LABEL_W-12, baseY+lay.rowH/2);
+    ctx.beginPath();
+    ctx.moveTo(DS_LABEL_W-8, baseY+lay.rowH/2); ctx.lineTo(DS_LABEL_W+2, baseY+lay.rowH/2);
+    ctx.strokeStyle = lv.border; ctx.lineWidth = 1.5; ctx.setLineDash([3,3]); ctx.stroke(); ctx.setLineDash([]);
+    ctx.restore();
+    lv.items.forEach(function(item, ii) {
+      var boxEase = easeOutCubic((elapsed - rowDelay - ii*5) / 24);
+      var r       = dsItemRect(ii, ic, lay.gridX, lay.gridW, baseY, lay.rowH);
+      var key     = li+','+ii;
+      var isHov   = _dsState.hovered && _dsState.hovered.row===li && _dsState.hovered.col===ii;
+      if (!_dsState.liftAnim[key]) _dsState.liftAnim[key] = 0;
+      _dsState.liftAnim[key] += ((isHov?1:0) - _dsState.liftAnim[key]) * 0.18;
+      var lift    = _dsState.liftAnim[key] * 5;
+      ctx.save();
+      ctx.translate(-(1-boxEase)*28, 0);
+      ctx.globalAlpha = boxEase;
+      ctx.shadowColor = lv.border + (isHov ? 'BB' : '44');
+      ctx.shadowBlur  = isHov ? 14 : 5; ctx.shadowOffsetY = isHov ? 5 : 2;
+      ctx.beginPath(); ctx.roundRect(r.x, r.y-lift, r.w, r.h, DS_RADIUS);
+      ctx.fillStyle = lv.bg; ctx.fill();
+      ctx.shadowBlur=0; ctx.shadowOffsetY=0;
+      ctx.strokeStyle = isHov ? lv.border : lv.border+'AA';
+      ctx.lineWidth = isHov ? 1.8 : 1.2; ctx.stroke();
+      ctx.font = (isHov?'700':'600')+' 13px Plus Jakarta Sans,sans-serif';
+      ctx.fillStyle = lv.text; ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.fillText(item, r.x+r.w/2, r.y-lift+r.h/2);
+      ctx.restore();
+    });
+    if (li < DS_LEVELS.length-1 && rowEase > 0.6) {
+      var dotAlpha = (rowEase-0.6)/0.4;
+      ctx.save(); ctx.globalAlpha = dotAlpha*0.55;
+      ctx.beginPath(); ctx.arc(lay.gridX+lay.gridW/2, baseY+lay.rowH+DS_GAP_Y/2, 2.5, 0, Math.PI*2);
+      ctx.fillStyle='#A0AEC0'; ctx.fill(); ctx.restore();
+    }
+  });
+  ctx.textBaseline='alphabetic'; ctx.globalAlpha=1;
+}
+
+function attachDSHover(canvas, w, h) {
+  var lay = dsLayout(w, h);
+  function hit(mx, my) {
+    for (var li=0; li<DS_LEVELS.length; li++) {
+      var y=dsRowY(li,lay.rowH), ic=DS_LEVELS[li].items.length;
+      for (var ii=0; ii<ic; ii++) {
+        var r=dsItemRect(ii,ic,lay.gridX,lay.gridW,y,lay.rowH);
+        if(mx>=r.x&&mx<=r.x+r.w&&my>=r.y&&my<=r.y+r.h) return{row:li,col:ii};
+      }
+    }
+    return null;
+  }
+  function fromEv(e){ var rc=canvas.getBoundingClientRect(); return{x:(e.clientX-rc.left)*(canvas.width/rc.width),y:(e.clientY-rc.top)*(canvas.height/rc.height)}; }
+  canvas.addEventListener('mousemove', function(e){ var p=fromEv(e),h2=hit(p.x,p.y); _dsState.hovered=h2; canvas.style.cursor=h2?'pointer':'default'; });
+  canvas.addEventListener('mouseleave', function(){ _dsState.hovered=null; canvas.style.cursor='default'; });
+  canvas.addEventListener('touchmove', function(e){ if(!e.touches[0])return; var p=fromEv(e.touches[0]); _dsState.hovered=hit(p.x,p.y); },{passive:true});
+  canvas.addEventListener('touchend', function(){ _dsState.hovered=null; },{passive:true});
+}
+
+/* ═══════════════════════════════════════════════════════════
+   2. PERFORMANCE ENGINEERING
+   Animated bar chart with before/after + live counter
+═══════════════════════════════════════════════════════════ */
+var _perfState = { animStart: null, hovered: null };
+
+var PERF_METRICS = [
+  { label:'LCP',    before:4.2,  after:1.8,  max:5.0,  unit:'s',   color:'#2D6A8F', good:'<2.5s'  },
+  { label:'CLS',    before:0.28, after:0.04, max:0.35, unit:'',    color:'#B07D3A', good:'<0.1'   },
+  { label:'FID',    before:280,  after:60,   max:350,  unit:'ms',  color:'#2E7D5E', good:'<100ms' },
+  { label:'Bundle', before:2.4,  after:0.9,  max:3.0,  unit:'MB',  color:'#6366F1', good:'<1MB'   }
+];
+
+function drawPerformance(ctx, w, h, frame) {
+  if (_perfState.animStart === null) _perfState.animStart = frame;
+  var el = frame - _perfState.animStart;
+  ctx.clearRect(0, 0, w, h);
+
+  /* ── Fixed zones — no overlaps:
+       heading  y=0..16
+       legend   y=20..32
+       rows     y=topY onwards, each rowH+gapY tall
+       badge    right column, vertically centred per row
+  ── */
+  var labelW   = 60;   /* row label col    */
+  var pad      = 14;
+  var badgeW   = 64;   /* right badge col  */
+  var barAreaW = w - labelW - pad - badgeW - pad;
+  var rowH     = 38;   /* per-row height: 2 bars + labels */
+  var gapY     = 16;   /* gap between rows */
+  var topY     = 40;   /* first row starts here (below heading+legend) */
+  var barH     = 14;   /* height of each bar */
+  var barGapY  = 5;    /* gap between before/after bars */
+  var bx       = labelW + pad; /* bar area left edge */
+
+  /* ── Heading ── */
+  ctx.font = '600 12px Plus Jakarta Sans,sans-serif';
+  ctx.fillStyle = '#7A7670'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillText('Core Web Vitals — Before vs After Optimisation', w/2, 9);
+  ctx.textBaseline = 'alphabetic';
+
+  /* ── Legend ── on its own row, left-aligned under heading */
+  var lgY = 27;
+  var legends = [
+    { x: bx,       color: '#BFC9D9', label: 'Before' },
+    { x: bx + 68,  color: '#2D6A8F', label: 'After'  }
+  ];
+  legends.forEach(function(lg) {
+    ctx.beginPath(); ctx.arc(lg.x + 5, lgY, 4, 0, Math.PI*2);
+    ctx.fillStyle = lg.color; ctx.fill();
+    ctx.font = '600 10px Plus Jakarta Sans,sans-serif';
+    ctx.fillStyle = '#7A7670'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    ctx.fillText(lg.label, lg.x + 13, lgY);
+  });
+  ctx.textBaseline = 'alphabetic';
+
+  /* ── Metric rows ── */
+  PERF_METRICS.forEach(function(m, i) {
+    var delay  = 10 + i * 12;
+    var barT   = easeOutCubic(Math.max(0, (el - delay) / 30));
+    var y      = topY + i * (rowH + gapY);
+    var isHov  = _perfState.hovered === i;
+    var lift   = smoothLift('perf_'+i, isHov) * 3;
+
+    /* ── Row label ── */
+    ctx.font = '700 13px Plus Jakarta Sans,sans-serif';
+    ctx.fillStyle = m.color; ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+    ctx.fillText(m.label, labelW - 4, y + rowH/2 - lift);
+    ctx.textBaseline = 'alphabetic';
+
+    /* ── Track background ── */
+    ctx.beginPath(); ctx.roundRect(bx, y - lift, barAreaW, rowH, 7);
+    ctx.fillStyle = m.color + '0F'; ctx.fill();
+    ctx.strokeStyle = m.color + '22'; ctx.lineWidth = 1; ctx.stroke();
+
+    /* ── Before bar (ghost) ── top half of track */
+    var bw = (m.before / m.max) * barAreaW * barT;
+    var beforeY = y + 3 - lift;
+    ctx.beginPath(); ctx.roundRect(bx, beforeY, bw, barH, 4);
+    ctx.fillStyle = m.color + '30'; ctx.fill();
+    ctx.strokeStyle = m.color + '50'; ctx.lineWidth = 1; ctx.stroke();
+
+    /* before value — right of bar, vertically centred on bar */
+    ctx.font = '600 10px Plus Jakarta Sans,sans-serif';
+    ctx.fillStyle = m.color + 'AA'; ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    ctx.fillText(m.before + m.unit, bx + bw + 5, beforeY + barH/2);
+
+    /* ── After bar (solid) ── bottom half of track */
+    var aw  = (m.after / m.max) * barAreaW * barT;
+    var afterY = beforeY + barH + barGapY;
+    ctx.save();
+    ctx.shadowColor   = m.color + (isHov ? '88' : '33');
+    ctx.shadowBlur    = isHov ? 10 : 4;
+    ctx.shadowOffsetY = isHov ? 2 : 1;
+    ctx.beginPath(); ctx.roundRect(bx, afterY, aw, barH, 4);
+    ctx.fillStyle = m.color; ctx.fill();
+    ctx.restore();
+
+    /* after value — inside bar if wide enough, else right of bar */
+    ctx.font = '700 10px Plus Jakarta Sans,sans-serif'; ctx.textBaseline = 'middle';
+    if (aw > 44) {
+      ctx.fillStyle = '#fff'; ctx.textAlign = 'left';
+      ctx.fillText(m.after + m.unit, bx + 6, afterY + barH/2);
+    } else {
+      ctx.fillStyle = m.color; ctx.textAlign = 'left';
+      ctx.fillText(m.after + m.unit, bx + aw + 5, afterY + barH/2);
+    }
+    ctx.textBaseline = 'alphabetic';
+
+    /* ── Improvement badge (right column) ── */
+    var pct  = Math.round((1 - m.after / m.before) * 100);
+    var bpx  = w - badgeW + 2;
+    var bpy  = y + (rowH - 30)/2 - lift;
+    ctx.save();
+    ctx.globalAlpha = barT;
+    ctx.shadowColor = '#96C8AA44'; ctx.shadowBlur = 6; ctx.shadowOffsetY = 2;
+    ctx.beginPath(); ctx.roundRect(bpx, bpy, badgeW - 4, 30, 8);
+    ctx.fillStyle = '#E8F5EE'; ctx.fill();
+    ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
+    ctx.strokeStyle = '#96C8AA'; ctx.lineWidth = 1; ctx.stroke();
+    ctx.font = '800 12px Plus Jakarta Sans,sans-serif';
+    ctx.fillStyle = '#276645'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText('↓' + pct + '%', bpx + (badgeW-4)/2, bpy + 11);
+    ctx.font = '500 9px Plus Jakarta Sans,sans-serif'; ctx.fillStyle = '#5A8A70';
+    ctx.fillText(m.good, bpx + (badgeW-4)/2, bpy + 23);
+    ctx.textBaseline = 'alphabetic';
+    ctx.restore();
+  });
+
+  ctx.globalAlpha = 1; ctx.textBaseline = 'alphabetic';
+}
+
+function attachPerfHover(canvas, w, h) {
+  var labelW=52, pad=16, rowH=36, gapY=14, topY=28;
+  var rightW=60, barAreaW=w-labelW-pad-rightW-pad;
+  canvas.addEventListener('mousemove', function(e) {
+    var rc = canvas.getBoundingClientRect();
+    var my = (e.clientY - rc.top) * (canvas.height / rc.height);
+    var hit = null;
+    for (var i=0; i<PERF_METRICS.length; i++) {
+      var y=topY+i*(rowH+gapY);
+      if (my>=y && my<=y+rowH) { hit=i; break; }
+    }
+    _perfState.hovered = hit;
+    canvas.style.cursor = hit!==null ? 'pointer' : 'default';
+  });
+  canvas.addEventListener('mouseleave', function() {
+    _perfState.hovered = null; canvas.style.cursor = 'default';
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════
+   3. MONOREPO ARCHITECTURE
+   Hub-spoke with orbiting nodes + animated spokes drawing in
+═══════════════════════════════════════════════════════════ */
+var _monoState = { animStart: null, hovered: null, angleOffset: 0 };
+
+var MONO_NODES = [
+  { label:'App: Web',    sub:'Next.js',      color:'#2D6A8F', bg:'#EBF4FA', angle: -Math.PI*0.5   },
+  { label:'App: Mobile', sub:'React Native', color:'#B07D3A', bg:'#FDF5E8', angle: -Math.PI*0.12  },
+  { label:'Lib: UI',     sub:'Storybook',    color:'#2E7D5E', bg:'#E8F5EE', angle:  Math.PI*0.55  },
+  { label:'Lib: Types',  sub:'TypeScript',   color:'#6366F1', bg:'#EEEEFF', angle:  Math.PI*0.88  },
+  { label:'Lib: Utils',  sub:'Shared Pkg',   color:'#EC4899', bg:'#FDE8F3', angle:  Math.PI*1.35  },
+  { label:'Tooling',     sub:'NX / TS',      color:'#7A7670', bg:'#F4F3F0', angle: -Math.PI*0.85  }
+];
+
+function drawMonorepo(ctx, w, h, frame) {
+  if (_monoState.animStart === null) _monoState.animStart = frame;
+  var el = frame - _monoState.animStart;
+  ctx.clearRect(0, 0, w, h);
+
+  var cx = w/2, cy = h/2 + 4;
+  var coreR = Math.min(32, w*0.054);
+  var orbitR = Math.min(h*0.36, w*0.29);
+  var nodeW  = Math.min(88, w*0.15), nodeH = 30;
+
+  /* subtle orbit ring */
+  var ringT = easeOutCubic(Math.max(0, (el-5)/25));
+  ctx.save(); ctx.globalAlpha = ringT * 0.15;
+  ctx.beginPath(); ctx.arc(cx, cy, orbitR, 0, Math.PI*2);
+  ctx.strokeStyle = '#2D6A8F'; ctx.lineWidth = 1; ctx.setLineDash([4,8]); ctx.stroke(); ctx.setLineDash([]);
+  ctx.restore();
+
+  /* heading */
+  ctx.font = '600 12px Plus Jakarta Sans,sans-serif'; ctx.fillStyle = '#7A7670';
+  ctx.textAlign = 'center'; ctx.globalAlpha = ringT;
+  ctx.fillText('Monorepo — Single Source of Truth', cx, 14);
+  ctx.globalAlpha = 1;
+
+  /* spokes + nodes — staggered */
+  MONO_NODES.forEach(function(n, i) {
+    var delay   = 15 + i * 7;
+    var rawT    = Math.max(0, Math.min(1.4, (el - delay) / 20));
+    /* easeOutBack for the scale pop, but clamp alpha to [0,1] */
+    var scaleT  = easeOutBack(Math.min(1, rawT));
+    var alpha   = Math.max(0, Math.min(1, rawT));
+    var isHov   = _monoState.hovered === i;
+    var liftT   = smoothLift('mono_' + i, isHov);
+    var liftR   = liftT * 10;
+
+    var angle = n.angle;
+    var r     = orbitR + liftR;
+    var nx    = cx + Math.cos(angle) * r;
+    var ny    = cy + Math.sin(angle) * r;
+
+    /* spoke — draw from hub edge to node */
+    var spokeX1 = cx + Math.cos(angle) * (coreR + 2);
+    var spokeX2 = nx - Math.cos(angle) * (nodeW * 0.48);
+    var spokeY1 = cy + Math.sin(angle) * (coreR + 2);
+    var spokeY2 = ny - Math.sin(angle) * (nodeH * 0.48);
+    ctx.save();
+    ctx.globalAlpha = Math.min(alpha, 1) * 0.45;
+    ctx.beginPath();
+    ctx.moveTo(spokeX1, spokeY1);
+    ctx.lineTo(spokeX2, spokeY2);
+    ctx.strokeStyle = n.color;
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([4, 5]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.restore();
+
+    /* node box — scale in from centre using transform */
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    /* translate to node centre, scale, translate back */
+    ctx.translate(nx, ny);
+    ctx.scale(scaleT, scaleT);
+    ctx.translate(-nx, -ny);
+
+    ctx.shadowColor   = n.color + (isHov ? '99' : '28');
+    ctx.shadowBlur    = isHov ? 16 : 5;
+    ctx.shadowOffsetY = isHov ? 5 : 2;
+
+    ctx.beginPath();
+    ctx.roundRect(nx - nodeW/2, ny - nodeH/2, nodeW, nodeH, 8);
+    ctx.fillStyle = n.bg;
+    ctx.fill();
+    ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
+    ctx.strokeStyle = n.color + (isHov ? 'CC' : '70');
+    ctx.lineWidth   = isHov ? 2 : 1.3;
+    ctx.stroke();
+
+    /* label */
+    ctx.font = '700 11px Plus Jakarta Sans,sans-serif';
+    ctx.fillStyle = n.color;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(n.label, nx, ny - 5);
+
+    /* sub */
+    ctx.font = '500 9px Plus Jakarta Sans,sans-serif';
+    ctx.fillStyle = n.color + 'AA';
+    ctx.fillText(n.sub, nx, ny + 7);
+
+    ctx.restore();
+  });
+
+  /* NX core hub */
+  var hubRaw = Math.max(0, Math.min(1, (el-5)/18));
+  var hubT   = easeOutBack(hubRaw);
+  ctx.save();
+  ctx.globalAlpha = Math.max(0, Math.min(1, hubRaw));
+  ctx.shadowColor = AC+'66'; ctx.shadowBlur = 20;
+  ctx.beginPath(); ctx.arc(cx, cy, coreR, 0, Math.PI*2);
+  var grad = ctx.createRadialGradient(cx-coreR*0.3, cy-coreR*0.3, 0, cx, cy, coreR);
+  grad.addColorStop(0, '#3D7FA8'); grad.addColorStop(1, '#1D4F6F');
+  ctx.fillStyle = grad; ctx.fill();
+  ctx.shadowBlur=0;
+  ctx.font='bold 13px Plus Jakarta Sans,sans-serif'; ctx.fillStyle='#fff';
+  ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText('NX',cx,cy-5);
+  ctx.font='500 8px Plus Jakarta Sans,sans-serif'; ctx.fillStyle='rgba(255,255,255,0.7)';
+  ctx.fillText('Turborepo',cx,cy+8);
+  ctx.restore();
+
+  /* affected build pulse ring */
+  var pulseFrame = (el % 80) / 80;
+  var pulseR = coreR + pulseFrame * (orbitR - coreR);
+  var pulseA = pulseFrame < 0.4 ? pulseFrame/0.4 * 0.25 : (1-pulseFrame)/0.6 * 0.25;
+  ctx.save();
+  ctx.globalAlpha = pulseA * Math.min(1, (el-20)/20);
+  ctx.beginPath(); ctx.arc(cx, cy, pulseR, 0, Math.PI*2);
+  ctx.strokeStyle = '#2D6A8F'; ctx.lineWidth = 1.5; ctx.stroke();
+  ctx.restore();
+
+  ctx.globalAlpha=1; ctx.textBaseline='alphabetic';
+}
+
+function attachMonoHover(canvas, w, h) {
+  var cx=w/2, cy=h/2+4;
+  var orbitR=Math.min(h*0.36,w*0.29), nodeW=Math.min(88,w*0.15), nodeH=30;
+  canvas.addEventListener('mousemove', function(e) {
+    var rc=canvas.getBoundingClientRect();
+    var mx=(e.clientX-rc.left)*(canvas.width/rc.width);
+    var my=(e.clientY-rc.top)*(canvas.height/rc.height);
+    var hit=null;
+    MONO_NODES.forEach(function(n,i){
+      var nx=cx+Math.cos(n.angle)*orbitR, ny=cy+Math.sin(n.angle)*orbitR;
+      if(mx>=nx-nodeW/2&&mx<=nx+nodeW/2&&my>=ny-nodeH/2&&my<=ny+nodeH/2) hit=i;
+    });
+    _monoState.hovered=hit; canvas.style.cursor=hit!==null?'pointer':'default';
+  });
+  canvas.addEventListener('mouseleave', function(){ _monoState.hovered=null; canvas.style.cursor='default'; });
+}
+
+/* ═══════════════════════════════════════════════════════════
+   4. AI-NATIVE INTEGRATION  (kept simple — already good)
+═══════════════════════════════════════════════════════════ */
+var _aiState = { animStart: null, hovered: null, flowAnim: 0 };
+
+var AI_STEPS = [
+  { label:'User\nInput',    color:'#6366F1', bg:'#EEEEFF', icon:'💬' },
+  { label:'Prompt\nEngine', color:'#2D6A8F', bg:'#EBF4FA', icon:'⚙️' },
+  { label:'Azure\nOpenAI',  color:'#B07D3A', bg:'#FDF5E8', icon:'🧠' },
+  { label:'RAG +\nContext', color:'#2E7D5E', bg:'#E8F5EE', icon:'📚' },
+  { label:'Stream\nUI',     color:'#EC4899', bg:'#FDE8F3', icon:'📡' }
+];
+
+function drawAI(ctx, w, h, frame) {
+  if (_aiState.animStart === null) _aiState.animStart = frame;
+  var el = frame - _aiState.animStart;
+  ctx.clearRect(0, 0, w, h);
+
+  var n      = AI_STEPS.length;
+  var pad    = 16;
+  var nodeR  = Math.min(26, w*0.04);
+  var cy     = h * 0.38;
+  var spacing = (w - pad*2 - nodeR*2) / (n-1);
+
+  /* ── Connector lines + animated packet ── */
+  for (var i=0; i<n-1; i++) {
+    var x1 = pad+nodeR + i*spacing;
+    var x2 = pad+nodeR + (i+1)*spacing;
+    var connT = easeOutCubic(Math.max(0,(el-8-i*6)/18));
+    ctx.save(); ctx.globalAlpha = connT;
+    ctx.beginPath(); ctx.moveTo(x1+nodeR, cy); ctx.lineTo(x2-nodeR-4, cy);
+    ctx.strokeStyle = '#CBD5E1'; ctx.lineWidth = 2; ctx.stroke();
+    /* arrowhead */
+    ctx.beginPath(); ctx.moveTo(x2-nodeR-9,cy-4); ctx.lineTo(x2-nodeR-3,cy); ctx.lineTo(x2-nodeR-9,cy+4);
+    ctx.strokeStyle = '#94A3B8'; ctx.lineWidth = 1.5; ctx.stroke();
+    ctx.restore();
+  }
+
+  /* animated data packet flowing right */
+  var flowT = Math.max(0, (el-35));
+  if (flowT > 0) {
+    var pktProgress = (flowT % 55) / 55;
+    var pktX = pad+nodeR + pktProgress*(spacing*(n-1));
+    ctx.save();
+    ctx.globalAlpha = 0.85 * easeOutCubic(Math.min(1, flowT/15));
+    ctx.shadowColor = '#6366F1AA'; ctx.shadowBlur = 8;
+    ctx.beginPath(); ctx.arc(pktX, cy, 5, 0, Math.PI*2);
+    var pktColor = AI_STEPS[Math.min(n-1, Math.floor(pktProgress*(n-1)))].color;
+    ctx.fillStyle = pktColor; ctx.fill();
+    ctx.restore();
+  }
+
+  /* ── Nodes ── */
+  AI_STEPS.forEach(function(s, i) {
+    var delay = 6 + i*8;
+    var nodeT = easeOutBack(Math.max(0,(el-delay)/20));
+    var x     = pad+nodeR + i*spacing;
+    var isHov = _aiState.hovered === i;
+    var liftT = smoothLift('ai_'+i, isHov);
+    var lift  = liftT * 5;
+
+    ctx.save();
+    ctx.globalAlpha = Math.min(1, nodeT);
+    ctx.translate(0, (1-Math.min(1,nodeT))*15);
+
+    ctx.shadowColor = s.color + (isHov?'AA':'40'); ctx.shadowBlur = isHov?18:10; ctx.shadowOffsetY = isHov?6:3;
+    ctx.beginPath(); ctx.arc(x, cy-lift, nodeR, 0, Math.PI*2);
+    var grad = ctx.createRadialGradient(x-nodeR*0.3, cy-lift-nodeR*0.3, 0, x, cy-lift, nodeR);
+    grad.addColorStop(0, s.color+'EE'); grad.addColorStop(1, s.color);
+    ctx.fillStyle = grad; ctx.fill();
+    ctx.shadowBlur=0; ctx.shadowOffsetY=0;
+    ctx.strokeStyle = isHov ? '#fff' : s.color+'AA';
+    ctx.lineWidth = isHov?2:0; if(isHov) ctx.stroke();
+
+    /* icon */
+    ctx.font = (nodeR*1.0)+'px serif'; ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText(s.icon, x, cy-lift);
+    ctx.textBaseline='alphabetic';
+
+    /* label below */
+    ctx.font = (isHov?'700':'600')+' 9px Plus Jakarta Sans,sans-serif';
+    ctx.fillStyle = s.color;
+    s.label.split('\n').forEach(function(ln,li){
+      ctx.fillText(ln, x, cy-lift+nodeR+12+li*11);
+    });
+
+    ctx.restore();
+  });
+
+  /* footer note */
+  var noteT = easeOutCubic(Math.max(0,(el-50)/20));
+  ctx.save(); ctx.globalAlpha = noteT * 0.7;
+  ctx.font='600 9px Plus Jakarta Sans,sans-serif'; ctx.fillStyle='#7A7670'; ctx.textAlign='center';
+  ctx.fillText('↑ Token stream via Server-Sent Events → React UI updates in real-time', w/2, h*0.92);
+  ctx.restore();
+
+  ctx.globalAlpha=1;
+}
+
+function attachAIHover(canvas, w, h) {
+  var n=AI_STEPS.length, pad=16, nodeR=Math.min(26,w*0.04), cy=h*0.38;
+  var spacing=(w-pad*2-nodeR*2)/(n-1);
+  canvas.addEventListener('mousemove', function(e){
+    var rc=canvas.getBoundingClientRect();
+    var mx=(e.clientX-rc.left)*(canvas.width/rc.width);
+    var my=(e.clientY-rc.top)*(canvas.height/rc.height);
+    var hit=null;
+    for(var i=0;i<n;i++){
+      var x=pad+nodeR+i*spacing;
+      var dx=mx-x,dy=my-cy;
+      if(dx*dx+dy*dy<=nodeR*nodeR*1.5){ hit=i; break; }
+    }
+    _aiState.hovered=hit; canvas.style.cursor=hit!==null?'pointer':'default';
+  });
+  canvas.addEventListener('mouseleave',function(){ _aiState.hovered=null; canvas.style.cursor='default'; });
+}
+
+/* ═══════════════════════════════════════════════════════════
+   5. HLD / LLD DOCUMENTATION
+   Three animated document cards with content lines appearing
+═══════════════════════════════════════════════════════════ */
+var _hldState = { animStart: null, hovered: null };
+
+var HLD_DOCS = [
+  { label:'HLD', title:'High-Level Design', color:'#2D6A8F', bg:'#EBF4FA',
+    lines:['System Context','Service Boundaries','Data Flows','Sequence Diagrams'] },
+  { label:'LLD', title:'Low-Level Design',  color:'#B07D3A', bg:'#FDF5E8',
+    lines:['Component APIs','State Patterns','Edge Cases','Interface Contracts'] },
+  { label:'ADR', title:'Decision Records',  color:'#2E7D5E', bg:'#E8F5EE',
+    lines:['Problem Statement','Options Considered','Decision Made','Status'] }
+];
+
+function drawHLD(ctx, w, h, frame) {
+  if (_hldState.animStart === null) _hldState.animStart = frame;
+  var el = frame - _hldState.animStart;
+  ctx.clearRect(0, 0, w, h);
+
+  var n    = HLD_DOCS.length;
+  var pad  = 16;
+  var gapX = 14;
+  var dw   = (w - pad*2 - gapX*(n-1)) / n;
+  var dy   = 18;
+  var dh   = h - dy - 28;
+  var headerH = 32;
+
+  /* heading */
+  ctx.font='600 12px Plus Jakarta Sans,sans-serif'; ctx.fillStyle='#7A7670'; ctx.textAlign='center';
+  ctx.globalAlpha = easeOutCubic(Math.max(0,el/15));
+  ctx.fillText('Architecture Documentation — Lives Alongside Code in the Repo', w/2, 11);
+  ctx.globalAlpha = 1;
+
+  HLD_DOCS.forEach(function(d, i) {
+    var delay  = 8 + i*10;
+    var cardT  = easeOutBack(Math.max(0,(el-delay)/22));
+    var x      = pad + i*(dw+gapX);
+    var isHov  = _hldState.hovered === i;
+    var liftT  = smoothLift('hld_'+i, isHov);
+    var lift   = liftT * 5;
+
+    ctx.save();
+    ctx.globalAlpha = Math.min(1,cardT);
+    ctx.translate(0, (1-Math.min(1,cardT))*20);
+
+    /* card shadow */
+    ctx.shadowColor = d.color+(isHov?'55':'22'); ctx.shadowBlur=isHov?18:8; ctx.shadowOffsetY=isHov?6:3;
+    ctx.beginPath(); ctx.roundRect(x, dy-lift, dw, dh, 11);
+    ctx.fillStyle = '#fff'; ctx.fill();
+    ctx.shadowBlur=0; ctx.shadowOffsetY=0;
+    ctx.strokeStyle = d.color+(isHov?'88':'33'); ctx.lineWidth=isHov?1.8:1.2; ctx.stroke();
+
+    /* coloured header */
+    ctx.beginPath(); ctx.roundRect(x, dy-lift, dw, headerH, [11,11,0,0]);
+    var hgrad = ctx.createLinearGradient(x, dy-lift, x, dy-lift+headerH);
+    hgrad.addColorStop(0, d.color); hgrad.addColorStop(1, d.color+'CC');
+    ctx.fillStyle = hgrad; ctx.fill();
+
+    /* header text */
+    ctx.font='bold 16px Plus Jakarta Sans,sans-serif'; ctx.fillStyle='#fff';
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText(d.label, x+dw/2, dy-lift+headerH*0.42);
+    ctx.font='500 8px Plus Jakarta Sans,sans-serif'; ctx.fillStyle='rgba(255,255,255,0.8)';
+    ctx.fillText(d.title, x+dw/2, dy-lift+headerH*0.78);
+    ctx.textBaseline='alphabetic';
+
+    /* content lines — appear one by one */
+    d.lines.forEach(function(ln, li) {
+      var lineDelay = delay + 12 + li*7;
+      var lineT     = easeOutCubic(Math.max(0,(el-lineDelay)/14));
+      var ly        = dy-lift+headerH+10+li*20;
+
+      ctx.save(); ctx.globalAlpha = lineT;
+      /* line pill */
+      ctx.beginPath(); ctx.roundRect(x+10, ly, (dw-20)*lineT, 14, 4);
+      ctx.fillStyle = d.color+'18'; ctx.fill();
+      /* line text */
+      ctx.font='500 9px Plus Jakarta Sans,sans-serif'; ctx.fillStyle=d.color+'CC';
+      ctx.textAlign='left'; ctx.textBaseline='middle';
+      ctx.fillText(ln, x+14, ly+7);
+      ctx.restore();
+    });
+
+    /* footer badge */
+    var badgeT = easeOutCubic(Math.max(0,(el-delay-40)/15));
+    ctx.save(); ctx.globalAlpha = badgeT;
+    var badgeY = dy-lift+dh-20;
+    ctx.beginPath(); ctx.roundRect(x+10, badgeY, dw-20, 14, 7);
+    ctx.fillStyle = d.color+'18'; ctx.fill(); ctx.strokeStyle=d.color+'33'; ctx.lineWidth=1; ctx.stroke();
+    ctx.font='600 8px Plus Jakarta Sans,sans-serif'; ctx.fillStyle=d.color;
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText('📁 /docs/' + d.label.toLowerCase() + '.md', x+dw/2, badgeY+7);
+    ctx.restore();
+
+    /* hover tooltip glow */
+    if (isHov && liftT > 0.2) {
+      ctx.save(); ctx.globalAlpha = liftT * 0.12;
+      ctx.beginPath(); ctx.roundRect(x, dy-lift, dw, dh, 11);
+      ctx.fillStyle = d.color; ctx.fill();
+      ctx.restore();
+    }
+
+    ctx.restore();
+  });
+
+  /* footer */
+  var footT = easeOutCubic(Math.max(0,(el-50)/15));
+  ctx.save(); ctx.globalAlpha = footT * 0.65;
+  ctx.font='600 9px Plus Jakarta Sans,sans-serif'; ctx.fillStyle='#7A7670'; ctx.textAlign='center';
+  ctx.fillText('Updated with every PR — docs stay in sync with implementation', w/2, h-6);
+  ctx.restore();
+  ctx.globalAlpha=1; ctx.textBaseline='alphabetic';
+}
+
+function attachHLDHover(canvas, w, h) {
+  var n=HLD_DOCS.length, pad=16, gapX=14;
+  var dw=(w-pad*2-gapX*(n-1))/n, dy=18, dh=h-dy-28;
+  canvas.addEventListener('mousemove', function(e){
+    var rc=canvas.getBoundingClientRect();
+    var mx=(e.clientX-rc.left)*(canvas.width/rc.width);
+    var my=(e.clientY-rc.top)*(canvas.height/rc.height);
+    var hit=null;
+    for(var i=0;i<n;i++){
+      var x=pad+i*(dw+gapX);
+      if(mx>=x&&mx<=x+dw&&my>=dy&&my<=dy+dh){ hit=i; break; }
+    }
+    _hldState.hovered=hit; canvas.style.cursor=hit!==null?'pointer':'default';
+  });
+  canvas.addEventListener('mouseleave',function(){ _hldState.hovered=null; canvas.style.cursor='default'; });
+}
+
+
+/* ════════════════════════════════════
+   POPUP DATA
+════════════════════════════════════ */
+var POPUP_DATA = {
+  microfrontend: {
+    icon:'⬡', title:'Micro-Frontend Strategy',
+    subtitle:'How a monolith becomes independently deployable team-owned frontends',
+    tags:['Module Federation','NX Monorepo','Webpack 5','Independent Deploys','Team Autonomy'],
+    steps:[
+      {title:'Monolith Decomposition', text:'A large app is split into vertical domain slices — each owned by one team with its own deploy pipeline.'},
+      {title:'Module Federation',      text:'Webpack 5 Module Federation lets each micro-app expose and consume components at runtime, not build time.'},
+      {title:'Shell Application',      text:'A lightweight host shell handles routing, auth, and orchestrates which micro-frontends load per route.'},
+      {title:'Independent Releases',   text:'Teams ship features without coordinating with others — true continuous delivery at organisational scale.'}
+    ],
+    draw: drawMicrofrontend
+  },
+  designsystem: {
+    icon:'◈', title:'Atomic Design Systems',
+    subtitle:'From raw design tokens to fully composed page-level patterns',
+    tags:['Design Tokens','Storybook','Component Variants','Theming','Multi-brand'],
+    steps:[
+      {title:'Tokens Layer',       text:'Colour, typography, spacing, motion defined as named variables — the single source of truth for design and code.'},
+      {title:'Atoms & Molecules',  text:'Primitive components (Button, Input) compose into molecules (SearchBar, FormField) with strict API contracts.'},
+      {title:'Organisms',          text:'Complex UI blocks (Header, DataTable, Modal) assemble from molecules forming reusable page sections.'},
+      {title:'Multi-brand Theming',text:'Token overrides swap the entire visual identity per brand without touching any component logic.'}
+    ],
+    draw: drawDesignSystem
+  },
+  performance: {
+    icon:'⚡', title:'Performance Engineering',
+    subtitle:'Systematic approach to measuring and improving Core Web Vitals',
+    tags:['LCP','CLS','FID','Bundle Splitting','Edge Rendering'],
+    steps:[
+      {title:'Measure First',          text:'Lighthouse CI and Web Vitals SDK capture baseline LCP, CLS, FID scores across real user sessions.'},
+      {title:'Bundle Analysis',        text:'Webpack Bundle Analyser and tree-shaking eliminate dead code — reducing JS payload by 40–60%.'},
+      {title:'Lazy Loading & Splitting',text:'Route and component-level code splitting ensures users only load what the current view needs.'},
+      {title:'Edge & Caching',         text:'Next.js ISR and CDN cache headers push rendering to the edge — sub-100ms TTFB globally.'}
+    ],
+    draw: drawPerformance
+  },
+  monorepo: {
+    icon:'📦', title:'Monorepo Architecture',
+    subtitle:'One repository, many apps — governed with NX & Turborepo',
+    tags:['NX','Turborepo','Affected Builds','Shared Libraries','CI Optimisation'],
+    steps:[
+      {title:'Workspace Structure', text:'Apps, libs, and tools live in a single repo with NX project graph enforcing dependency direction rules.'},
+      {title:'Shared Libraries',    text:'UI components, utilities, and types published as internal packages — consumed by any app in the workspace.'},
+      {title:'Affected Builds',     text:'NX computes which projects are affected by each PR — only those are rebuilt, cutting CI time by 70%.'},
+      {title:'Remote Caching',      text:'Turborepo remote cache shares build artefacts across machines — never rebuild what has not changed.'}
+    ],
+    draw: drawMonorepo
+  },
+  ai: {
+    icon:'🤖', title:'AI-Native Integration',
+    subtitle:'Bridging LLM capabilities with enterprise frontend platforms',
+    tags:['Azure OpenAI','Prompt Engineering','Streaming UI','RAG','BidGPT'],
+    steps:[
+      {title:'Prompt Architecture', text:'System prompts, few-shot examples, and chain-of-thought templates engineered for deterministic, safe outputs.'},
+      {title:'Streaming UX',        text:'Server-Sent Events stream LLM tokens to the UI in real time — giving users instant feedback on generation.'},
+      {title:'RAG Pipeline',        text:'Retrieval-Augmented Generation grounds responses in enterprise documents — preventing hallucination in B2B contexts.'},
+      {title:'Frontend Integration',text:'React hooks abstract the AI layer — components stay clean, with AI calls treated as async data sources.'}
+    ],
+    draw: drawAI
+  },
+  hld: {
+    icon:'📋', title:'HLD / LLD Documentation',
+    subtitle:'Architecture decisions captured as living, team-readable documents',
+    tags:['HLD','LLD','ADR','Component Contracts','Onboarding'],
+    steps:[
+      {title:'High-Level Design',           text:'System context, service boundaries, and data flows documented for stakeholder alignment.'},
+      {title:'Low-Level Design',            text:'Component APIs, state management patterns, and edge cases specified for engineers.'},
+      {title:'Architecture Decision Records',text:'ADRs capture the "why" behind each major decision — searchable history preventing repeated debates.'},
+      {title:'Living Documentation',        text:'Docs live in the repo alongside code — PR reviews include doc updates, keeping reality and specs in sync.'}
+    ],
+    draw: drawHLD
+  }
+};
+
+/* ════════════════════════════════════
+   POPUP CONTROLLER
+════════════════════════════════════ */
+var overlay  = document.getElementById('archOverlay');
+var apCanvas = document.getElementById('apCanvas');  /* reassigned on each open */
+var apClose  = document.getElementById('apClose');
+var currentRAF = null;
+
+function canvasW() { return Math.min(window.innerWidth <= 480 ? window.innerWidth - 48 : 600, 600); }
+
+function openPopup(key) {
+  var d = POPUP_DATA[key];
+  if (!d) return;
+  document.body.style.overflow = 'hidden';
+
+  document.getElementById('apIcon').textContent     = d.icon;
+  document.getElementById('apTitle').textContent    = d.title;
+  document.getElementById('apSubtitle').textContent = d.subtitle;
+
+  document.getElementById('apSteps').innerHTML = d.steps.map(function(s, i) {
+    return '<div class="ap-step">' +
+      '<div class="ap-step-num">' + (i+1) + '</div>' +
+      '<div class="ap-step-text"><strong>' + s.title + '</strong><span>' + s.text + '</span></div>' +
+      '</div>';
+  }).join('');
+
+  document.getElementById('apTags').innerHTML = d.tags.map(function(t) {
+    return '<span class="ap-tag">' + t + '</span>';
+  }).join('');
+
+  /* size canvas — design system gets more height to show the grid clearly */
+  var cw = canvasW();
+  var heightMap = {
+    designsystem:  0.56,
+    microfrontend: 0.54,  /* taller: shell label + boxes + arrows + page bar */
+    performance:   0.52,  /* taller: heading + legend + 4 double-bar rows    */
+    monorepo:      0.54,
+    ai:            0.40,
+    hld:           0.54
+  };
+  var ch = Math.round(cw * (heightMap[key] || 0.38));
+  apCanvas.width = cw; apCanvas.height = ch;
+  apCanvas.style.width = cw + 'px'; apCanvas.style.height = ch + 'px';
+
+  /* reset all animated states */
+  resetHoverPool();
+  _dsState.hovered = null; _dsState.animStart = null; _dsState.liftAnim = {};
+  _mfState.hovered = null; _mfState.animStart = null;
+  _perfState.hovered = null; _perfState.animStart = null;
+  _monoState.hovered = null; _monoState.animStart = null;
+  _aiState.hovered = null; _aiState.animStart = null;
+  _hldState.hovered = null; _hldState.animStart = null;
+
+  /* stop any previous loop */
+  if (currentRAF) { cancelAnimationFrame(currentRAF); currentRAF = null; }
+
+  /* Replace canvas with a fresh clone to wipe all stale event listeners */
+  var oldCanvas = document.getElementById('apCanvas');
+  var newCanvas = oldCanvas.cloneNode(false);
+  newCanvas.id = 'apCanvas';
+  newCanvas.width  = cw;
+  newCanvas.height = ch;
+  newCanvas.style.width  = cw + 'px';
+  newCanvas.style.height = ch + 'px';
+  oldCanvas.parentNode.replaceChild(newCanvas, oldCanvas);
+  apCanvas = newCanvas;
+
+  var ctx = apCanvas.getContext('2d');
+
+  /* Attach hover for this diagram */
+  var hoverFns = {
+    microfrontend: attachMFHover,
+    designsystem:  attachDSHover,
+    performance:   attachPerfHover,
+    monorepo:      attachMonoHover,
+    ai:            attachAIHover,
+    hld:           attachHLDHover
+  };
+  if (hoverFns[key]) hoverFns[key](apCanvas, cw, ch);
+
+  /* Run animation loop */
+  var frame = 0;
+  function animLoop() {
+    d.draw(ctx, cw, ch, frame++);
+    currentRAF = requestAnimationFrame(animLoop);
+  }
+  animLoop();
+
+  overlay.classList.add('open');
+}
+
+function closePopup() {
+  overlay.classList.remove('open');
+  document.body.style.overflow = '';
+  if (currentRAF) { cancelAnimationFrame(currentRAF); currentRAF = null; }
+  resetHoverPool();
+  _dsState.hovered = null; _dsState.animStart = null; _dsState.liftAnim = {};
+  _mfState.hovered = null; _mfState.animStart = null;
+  _perfState.hovered = null; _perfState.animStart = null;
+  _monoState.hovered = null; _monoState.animStart = null;
+  _aiState.hovered = null; _aiState.animStart = null;
+  _hldState.hovered = null; _hldState.animStart = null;
+}
+
+/* wire up cards */
+document.querySelectorAll('.arch-card[data-popup]').forEach(function(card) {
+  card.addEventListener('click', function(e) {
+    e.stopPropagation();
+    openPopup(card.getAttribute('data-popup'));
+  });
+});
+
+apClose.addEventListener('click', closePopup);
+overlay.addEventListener('click', function(e) { if (e.target === overlay) closePopup(); });
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closePopup(); });
+
+})();
+</script>
+
 </body>
 </html>
