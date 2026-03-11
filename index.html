@@ -139,26 +139,26 @@ nav.scrolled { box-shadow: var(--shadow-sm); }
   opacity: 0; animation: fadeUp 0.7s 0.55s forwards;
 }
 .hero-stats {
-  display: flex; gap: 1.25rem; flex-wrap: wrap; margin-bottom: 3rem;
+  display: flex; gap: 0.85rem; flex-wrap: wrap; margin-bottom: 2.25rem;
   opacity: 0; animation: fadeUp 0.7s 0.7s forwards;
 }
 .stat-box {
   background: var(--bg2); border: 1px solid var(--border);
-  border-radius: 12px; padding: 1.25rem 1.75rem;
+  border-radius: 10px; padding: 0.85rem 1.25rem;
   box-shadow: var(--shadow-sm); transition: all 0.25s;
 }
 .stat-box:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
-.stat-n { font-size: 2.25rem; font-weight: 800; letter-spacing: -0.04em; line-height: 1; color: var(--accent); }
-.stat-l { font-size: 0.72rem; font-weight: 700; color: var(--subtle); letter-spacing: 0.05em; text-transform: uppercase; margin-top: 0.2rem; }
+.stat-n { font-size: 1.7rem; font-weight: 800; letter-spacing: -0.04em; line-height: 1; color: var(--accent); }
+.stat-l { font-size: 0.65rem; font-weight: 700; color: var(--subtle); letter-spacing: 0.05em; text-transform: uppercase; margin-top: 0.18rem; }
 .hero-actions {
-  display: flex; gap: 1rem; flex-wrap: wrap;
+  display: flex; gap: 0.75rem; flex-wrap: wrap;
   opacity: 0; animation: fadeUp 0.7s 0.85s forwards;
 }
 .btn-fill {
   display: inline-flex; align-items: center; gap: 0.5rem;
   background: var(--accent); color: #fff;
-  font-size: 0.875rem; font-weight: 600; font-family: var(--sans);
-  padding: 0.8rem 1.75rem; border-radius: 10px; text-decoration: none;
+  font-size: 0.82rem; font-weight: 600; font-family: var(--sans);
+  padding: 0.6rem 1.35rem; border-radius: 9px; text-decoration: none;
   box-shadow: 0 2px 8px rgba(45,106,143,0.25); transition: all 0.25s;
 }
 .btn-fill:hover { background: var(--accent2); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(45,106,143,0.35); }
@@ -166,8 +166,8 @@ nav.scrolled { box-shadow: var(--shadow-sm); }
   display: inline-flex; align-items: center; gap: 0.5rem;
   background: transparent; color: var(--text2);
   border: 1.5px solid var(--border2);
-  font-size: 0.875rem; font-weight: 600; font-family: var(--sans);
-  padding: 0.8rem 1.75rem; border-radius: 10px; text-decoration: none; transition: all 0.25s;
+  font-size: 0.82rem; font-weight: 600; font-family: var(--sans);
+  padding: 0.6rem 1.35rem; border-radius: 9px; text-decoration: none; transition: all 0.25s;
 }
 .btn-outline:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-lt); transform: translateY(-2px); }
 
@@ -960,6 +960,63 @@ section { padding: 6rem 3.5rem; position: relative; z-index: 1; }
   .pillars-header-title { font-size: 1rem; }
   .nav-btn-pillars { display: none; }  /* hidden on mobile — only show in hamburger */
 }
+
+/* ── Design the Future button ── */
+.btn-future {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: var(--accent); color: #fff;
+  font-size: 0.82rem; font-weight: 600; font-family: var(--sans);
+  padding: 0.6rem 1.35rem; border-radius: 9px;
+  border: none; cursor: pointer;
+  box-shadow: 0 2px 8px rgba(45,106,143,0.25); transition: all 0.25s;
+}
+.btn-future:hover {
+  background: var(--accent2); transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(45,106,143,0.35);
+}
+.btn-future .star-icon {
+  display: inline-block;
+  animation: starSpin 3s linear infinite;
+  transform-origin: center;
+  font-style: normal;
+}
+@keyframes starSpin {
+  0%   { transform: rotate(0deg)   scale(1);   }
+  25%  { transform: rotate(90deg)  scale(1.35); }
+  50%  { transform: rotate(180deg) scale(1);   }
+  75%  { transform: rotate(270deg) scale(1.35); }
+  100% { transform: rotate(360deg) scale(1);   }
+}
+
+/* ── Future Modal ── */
+.future-overlay {
+  position: fixed; inset: 0; z-index: 3000;
+  background: #030A14;
+  display: flex; flex-direction: column;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+.future-overlay.open { opacity: 1; pointer-events: all; }
+
+.future-close {
+  position: absolute; top: 1.25rem; right: 1.5rem; z-index: 10;
+  width: 40px; height: 40px; border-radius: 12px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.6);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 1rem;
+  transition: all 0.2s;
+}
+.future-close:hover { background: rgba(255,255,255,0.14); color: #fff; }
+
+.future-canvas-wrap {
+  flex: 1; position: relative; min-height: 0;
+}
+.future-canvas-wrap canvas {
+  display: block; width: 100%; height: 100%;
+  position: absolute; inset: 0;
+}
 </style>
 </head>
 <body>
@@ -977,7 +1034,7 @@ section { padding: 6rem 3.5rem; position: relative; z-index: 1; }
     <li><a href="#design-system">Design Systems</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#leadership">Leadership</a></li>
-    <li><a href="#" class="nav-btn-pillars" id="openPillars">Architecture Principles</a></li>
+    <li><a href="#" class="nav-btn-pillars" id="openPillars">Principals &amp; Architects</a></li>
     <li><a href="#contact" class="nav-cta">Contact</a></li>
   </ul>
 </nav>
@@ -1000,6 +1057,7 @@ section { padding: 6rem 3.5rem; position: relative; z-index: 1; }
       <div class="stat-box"><div class="stat-n">F500</div><div class="stat-l">Global Clients</div></div>
     </div>
     <div class="hero-actions">
+      <button class="btn-future" id="openFutureModal"><span class="star-icon">✦</span> Design the Future Together</button>
       <a href="#experience" class="btn-fill">Explore Experience →</a>
       <a href="#contact" class="btn-outline">Get in Touch</a>
     </div>
@@ -3699,6 +3757,502 @@ window.addEventListener('resize',function(){
     var c=document.getElementById('pillarsCanvas'); c.width=0; c.height=0;
   }
 },{passive:true});
+
+})();
+</script>
+
+
+<!-- ═══════════ DESIGN THE FUTURE MODAL ═══════════ -->
+<div class="future-overlay" id="futureOverlay">
+  <div class="future-close" id="futureClose">✕</div>
+  <div class="future-canvas-wrap">
+    <canvas id="futureCanvas"></canvas>
+  </div>
+</div>
+
+<script>
+(function(){
+'use strict';
+
+/* ════════════════════════════════════════════════
+   DESIGN THE FUTURE — CANVAS ANIMATION
+   Layers:
+   1. Deep star-field background
+   2. Three concentric orbit rings spinning with concept nodes
+   3. Central pulsing hub with architect text
+   4. Radial text phrases that fade in around the hub
+   5. Floating keyword particles
+   6. Typewriter quote at bottom
+════════════════════════════════════════════════ */
+
+var _fRaf = null;
+var _fFrame = 0;
+var _fOpen  = false;
+
+/* Concept nodes on 3 orbit rings */
+var ORBIT_NODES = [
+  /* Ring 1 — inner, well clear of hub */
+  { label:'Systems',      orbit:0.30, speed:0.008,  angle:0,           color:'#61DAFB', size:7  },
+  { label:'Scalability',  orbit:0.30, speed:0.008,  angle:Math.PI,     color:'#A8D455', size:7  },
+  /* Ring 2 — mid */
+  { label:'Performance',  orbit:0.52, speed:0.005,  angle:0.5,         color:'#FF7BAC', size:8  },
+  { label:'Architecture', orbit:0.52, speed:0.005,  angle:2.2,         color:'#F5E84A', size:8  },
+  { label:'Experience',   orbit:0.52, speed:0.005,  angle:4.1,         color:'#C67FE8', size:8  },
+  /* Ring 3 — outer */
+  { label:'Interfaces',   orbit:0.74, speed:0.003,  angle:1.0,         color:'#FF7A5A', size:9  },
+  { label:'Users',        orbit:0.74, speed:0.003,  angle:2.5,         color:'#5B9BD5', size:9  },
+  { label:'Platforms',    orbit:0.74, speed:0.003,  angle:4.0,         color:'#68A063', size:9  },
+  { label:'Leadership',   orbit:0.74, speed:0.003,  angle:5.5,         color:'#FA6C6C', size:9  }
+];
+
+/* Phrase segments that appear around the hub over time */
+var PHRASES = [
+  { text:'Real Architecture',     angle: -Math.PI*0.5, r:0.18, delay:40,  color:'rgba(255,255,255,0.95)', size:1.8, bold:true  },
+  { text:'Is Much More',          angle: -Math.PI*0.5, r:0.24, delay:70,  color:'rgba(255,255,255,0.75)', size:1.2, bold:false },
+  { text:'Than That.',            angle: -Math.PI*0.5, r:0.30, delay:100, color:'rgba(255,255,255,0.65)', size:1.2, bold:false },
+];
+
+/* Floating keyword particles */
+var KEYWORDS = [
+  'Code','Interfaces','Design','Systems','Scalability',
+  'Performance','Millions','Digital','Enterprise','Craft',
+  'Vision','Impact','Platform','Future','Architecture'
+];
+var _fParticles = null;
+
+function initParticles(W, H){
+  _fParticles = KEYWORDS.map(function(kw, i){
+    return {
+      text: kw,
+      x: 80 + Math.random()*(W-160),
+      y: 80 + Math.random()*(H-160),
+      vx: (Math.random()-0.5)*0.4,
+      vy: (Math.random()-0.5)*0.4,
+      alpha: 0.08 + Math.random()*0.12,
+      size: 10 + Math.random()*8,
+      life: Math.random()*Math.PI*2
+    };
+  });
+}
+
+/* Typewriter state */
+var TYPEWRITER_LINES = [
+  "It's not just about writing code or building interfaces.",
+  "It's about designing systems, enabling scalability,",
+  "improving performance, and shaping digital experiences",
+  "that millions of users rely on."
+];
+var _twLine = 0, _twChar = 0, _twPause = 0, _twDone = false, _twDoneFrame = 0;
+
+function easeOutCubic(t){ return 1-Math.pow(1-Math.min(1,Math.max(0,t)),3); }
+
+function drawFuture(canvas){
+  var wrap = document.querySelector('.future-canvas-wrap');
+  var dpr  = window.devicePixelRatio || 1;
+  var W    = wrap.clientWidth;
+  var H    = wrap.clientHeight;
+
+  if(canvas.width !== Math.round(W*dpr) || canvas.height !== Math.round(H*dpr)){
+    canvas.width  = Math.round(W*dpr);
+    canvas.height = Math.round(H*dpr);
+    canvas.style.width  = W+'px';
+    canvas.style.height = H+'px';
+    _fParticles = null;
+    _twLine = 0; _twChar = 0; _twPause = 0; _twDone = false;
+  }
+
+  if(!_fParticles) initParticles(W, H);
+
+  var ctx = canvas.getContext('2d');
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.clearRect(0,0,W,H);
+
+  var f = _fFrame;
+
+  /* ══════════════════════════════════════════
+     FIXED ZONES — nothing overlaps:
+     Zone A  headline    y = 0    .. headH
+     Zone B  orbit       y = headH .. headH+orbitZoneH
+     Zone C  typewriter  y = headH+orbitZoneH .. H
+  ══════════════════════════════════════════ */
+  var qfs     = Math.max(16, Math.min(28, W*0.026));   /* headline font size */
+  var sfs     = Math.max(11, Math.min(14, W*0.013));   /* sub-line font size */
+  var headH   = Math.round(qfs*2.2 + sfs*1.8 + 24);   /* header zone height — compact */
+  var twFs    = Math.max(12, Math.min(16, W*0.016));
+  var twLineH = Math.max(22, Math.min(28, H*0.036));
+  var twLines = TYPEWRITER_LINES.length;
+  var twH     = twLines * twLineH + 36;                /* typewriter zone height */
+  var orbitZoneH = H - headH - twH;
+  var hubX    = W / 2;
+  var hubY    = headH + orbitZoneH / 2;                /* perfectly centred in orbit zone */
+  /* maxOrbitR: use 44% of width OR 42% of orbit zone — whichever is smaller */
+  var maxOrbitR = Math.min(W * 0.44, orbitZoneH * 0.44);
+
+  /* ── 1. Background ── */
+  var bg = ctx.createRadialGradient(hubX,hubY,0,hubX,hubY,Math.max(W,H)*0.75);
+  bg.addColorStop(0,'#0A1628');
+  bg.addColorStop(0.5,'#050D1A');
+  bg.addColorStop(1,'#020810');
+  ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
+
+  /* ── 2. Star field (avoid headline & typewriter zones) ── */
+  ctx.save();
+  for(var si=0;si<120;si++){
+    var sx = ((si*137.508+83)%1)*W;
+    var sy = ((si*97.31+41)%1)*H;
+    var sr = (si%5)/5*1.2+0.3;
+    var sa = 0.2+((si%7)/7)*0.5;
+    sa *= 0.6 + 0.4*Math.sin(f*0.02 + si*0.8);
+    ctx.globalAlpha = sa;
+    ctx.beginPath(); ctx.arc(sx,sy,sr,0,Math.PI*2);
+    ctx.fillStyle='#fff'; ctx.fill();
+  }
+  ctx.restore();
+
+  /* ── 3. Floating keywords — clamped to orbit zone only ── */
+  _fParticles.forEach(function(p){
+    p.x += p.vx; p.y += p.vy; p.life += 0.018;
+    if(p.x < 30 || p.x > W-30) p.vx *= -1;
+    /* bounce within orbit zone */
+    if(p.y < headH+20 || p.y > headH+orbitZoneH-20) p.vy *= -1;
+    var pa = p.alpha * (0.5 + 0.5*Math.sin(p.life));
+    ctx.save();
+    ctx.globalAlpha = pa * 0.55;
+    ctx.font = '500 '+p.size+'px Plus Jakarta Sans,sans-serif';
+    ctx.fillStyle = 'rgba(100,160,220,0.7)';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(p.text, p.x, p.y);
+    ctx.restore();
+  });
+
+  /* ── 4. Orbit rings ── */
+  [0.30, 0.52, 0.74].forEach(function(frac, ri){
+    var r = frac * maxOrbitR;
+    ctx.save();
+    ctx.beginPath(); ctx.arc(hubX, hubY, r, 0, Math.PI*2);
+    ctx.strokeStyle = 'rgba(45,106,143,'+(0.22-ri*0.04)+')';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([4,10]); ctx.stroke(); ctx.setLineDash([]);
+    ctx.restore();
+  });
+
+  /* ── 5. Orbit nodes — labels clamped to orbit zone ── */
+  var orbitTop    = headH + 8;
+  var orbitBottom = headH + orbitZoneH - 8;
+
+  ORBIT_NODES.forEach(function(nd){
+    nd.angle += nd.speed;
+    var r  = nd.orbit * maxOrbitR;
+    var nx = hubX + Math.cos(nd.angle)*r;
+    var ny = hubY + Math.sin(nd.angle)*r;
+
+    /* spoke */
+    ctx.save(); ctx.globalAlpha = 0.07;
+    ctx.beginPath(); ctx.moveTo(hubX,hubY); ctx.lineTo(nx,ny);
+    ctx.strokeStyle = nd.color; ctx.lineWidth=1; ctx.stroke();
+    ctx.restore();
+
+    /* halo */
+    var haloR = nd.size*3.5;
+    var ng = ctx.createRadialGradient(nx,ny,0,nx,ny,haloR);
+    ng.addColorStop(0, nd.color+'55'); ng.addColorStop(1,'transparent');
+    ctx.beginPath(); ctx.arc(nx,ny,haloR,0,Math.PI*2);
+    ctx.fillStyle=ng; ctx.fill();
+
+    /* dot */
+    ctx.beginPath(); ctx.arc(nx,ny,nd.size*0.85,0,Math.PI*2);
+    ctx.fillStyle=nd.color; ctx.fill();
+    ctx.strokeStyle='rgba(255,255,255,0.2)'; ctx.lineWidth=1; ctx.stroke();
+
+    /* label — placed well outside dot, clamped strictly inside orbit zone */
+    var lDist = r + nd.size*4.5;
+    var lx    = hubX + Math.cos(nd.angle)*lDist;
+    var ly    = hubY + Math.sin(nd.angle)*lDist;
+    var nfs   = Math.max(11, Math.min(14, W*0.014));
+    ctx.font  = '600 '+nfs+'px Plus Jakarta Sans,sans-serif';
+    var tw    = ctx.measureText(nd.label).width;
+    /* generous horizontal padding so text is never clipped */
+    lx = Math.max(tw/2+20, Math.min(W-tw/2-20, lx));
+    ly = Math.max(orbitTop+nfs+6, Math.min(orbitBottom-nfs-6, ly));
+    ctx.fillStyle='rgba(255,255,255,0.88)';
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText(nd.label, lx, ly);
+  });
+
+  /* ── 6. Hub ── */
+  var hubR  = Math.min(maxOrbitR*0.16, Math.min(W,H)*0.055);
+  var glowR = hubR*2.0;
+  /* pulse rings */
+  for(var pi=0;pi<3;pi++){
+    var pulsePhase = (f*0.018 + pi*0.9) % (Math.PI*2);
+    var pulseR = hubR*(1.4 + pi*0.55 + 0.25*Math.sin(pulsePhase));
+    var pulseA = 0.11*(1-pi*0.02)*(0.5+0.5*Math.sin(pulsePhase));
+    ctx.save(); ctx.globalAlpha=pulseA;
+    ctx.beginPath(); ctx.arc(hubX,hubY,pulseR,0,Math.PI*2);
+    ctx.strokeStyle='rgba(45,106,143,0.8)'; ctx.lineWidth=1.5; ctx.stroke();
+    ctx.restore();
+  }
+  /* glow */
+  var hg = ctx.createRadialGradient(hubX,hubY,0,hubX,hubY,glowR);
+  hg.addColorStop(0,'rgba(58,140,181,0.38)');
+  hg.addColorStop(0.5,'rgba(30,80,140,0.22)');
+  hg.addColorStop(1,'rgba(10,30,60,0)');
+  ctx.beginPath(); ctx.arc(hubX,hubY,glowR,0,Math.PI*2);
+  ctx.fillStyle=hg; ctx.fill();
+  /* circle */
+  var hubGrad = ctx.createRadialGradient(hubX-hubR*0.25,hubY-hubR*0.3,0,hubX,hubY,hubR);
+  hubGrad.addColorStop(0,'#3A80C8');
+  hubGrad.addColorStop(0.6,'#1E3F7A');
+  hubGrad.addColorStop(1,'#0D1F40');
+  ctx.shadowColor='rgba(58,128,200,0.7)'; ctx.shadowBlur=28;
+  ctx.beginPath(); ctx.arc(hubX,hubY,hubR,0,Math.PI*2);
+  ctx.fillStyle=hubGrad; ctx.fill(); ctx.shadowBlur=0;
+  ctx.strokeStyle='rgba(100,170,255,0.4)'; ctx.lineWidth=2; ctx.stroke();
+  /* text */
+  var hfs = Math.max(12, Math.min(18, hubR*0.55));
+  ctx.font='800 '+hfs+'px Plus Jakarta Sans,sans-serif';
+  ctx.fillStyle='#fff'; ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.shadowColor='rgba(100,180,255,0.5)'; ctx.shadowBlur=10;
+  ctx.fillText('SRB', hubX, hubY - hfs*0.55);
+  ctx.shadowBlur=0;
+  ctx.font='600 '+(hfs*0.62)+'px Plus Jakarta Sans,sans-serif';
+  ctx.fillStyle='rgba(150,210,255,0.85)';
+  ctx.fillText('ARCHITECT', hubX, hubY + hfs*0.5);
+
+  /* ── 7. HEADLINE — Zone A, elegant top section ── */
+  var arcReveal = easeOutCubic(Math.min(1, (f-20)/50));
+  if(arcReveal > 0){
+    ctx.save();
+
+    /* ── Decorative side dashes flanking headline ── */
+    var dashReveal = easeOutCubic(Math.min(1,(f-30)/40));
+    var dashY  = 18 + qfs*0.52;
+    var dashW  = Math.min(W*0.10, 70) * dashReveal;
+    var headMW = W*0.5; /* approx half headline text width */
+    var dashGap = 18;
+    /* left dash */
+    var dlg = ctx.createLinearGradient(W/2-headMW/2-dashGap-dashW, 0, W/2-headMW/2-dashGap, 0);
+    dlg.addColorStop(0,'transparent'); dlg.addColorStop(1,'rgba(100,170,255,0.55)');
+    ctx.globalAlpha = dashReveal * 0.8;
+    ctx.fillStyle = dlg;
+    ctx.fillRect(W/2-headMW/2-dashGap-dashW, dashY, dashW, 1.5);
+    /* right dash */
+    var drg = ctx.createLinearGradient(W/2+headMW/2+dashGap, 0, W/2+headMW/2+dashGap+dashW, 0);
+    drg.addColorStop(0,'rgba(100,170,255,0.55)'); drg.addColorStop(1,'transparent');
+    ctx.fillStyle = drg;
+    ctx.fillRect(W/2+headMW/2+dashGap, dashY, dashW, 1.5);
+
+    /* ── Main headline — gradient text via clip trick ── */
+    ctx.globalAlpha = arcReveal;
+    ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+
+    /* glow layer behind text */
+    ctx.font = '800 '+qfs+'px Plus Jakarta Sans,sans-serif';
+    ctx.shadowColor = 'rgba(120,180,255,0.55)'; ctx.shadowBlur = 22;
+    ctx.fillStyle = 'rgba(255,255,255,0.08)';
+    ctx.fillText('Real Architecture Is Much More Than That.', W/2, 16);
+    ctx.shadowBlur = 0;
+
+    /* actual white headline */
+    ctx.fillStyle = '#fff';
+    ctx.fillText('Real Architecture Is Much More Than That.', W/2, 16);
+
+    /* ── Animated shimmer sweep across headline ── */
+    var sweep = (f % 180) / 180;
+    if(sweep < 0.6){
+      var sx0 = W/2 - W*0.42 + sweep*(W*0.84);
+      var sweepGrad = ctx.createLinearGradient(sx0-30, 0, sx0+30, 0);
+      sweepGrad.addColorStop(0,'transparent');
+      sweepGrad.addColorStop(0.5,'rgba(200,230,255,0.18)');
+      sweepGrad.addColorStop(1,'transparent');
+      ctx.save();
+      /* clip to headline area */
+      ctx.beginPath(); ctx.rect(W/2-W*0.45, 14, W*0.90, qfs+4);
+      ctx.clip();
+      ctx.fillStyle = sweepGrad;
+      ctx.fillRect(sx0-40, 14, 80, qfs+4);
+      ctx.restore();
+    }
+
+    /* ── Gradient underline with diamond caps ── */
+    ctx.globalAlpha = arcReveal * 0.65;
+    var ulY = 16 + qfs + 6;
+    var ulW = Math.min(W*0.62, 580);
+    var ulg = ctx.createLinearGradient(W/2-ulW/2, 0, W/2+ulW/2, 0);
+    ulg.addColorStop(0,'transparent');
+    ulg.addColorStop(0.15,'rgba(100,170,255,0.8)');
+    ulg.addColorStop(0.5,'rgba(160,210,255,1.0)');
+    ulg.addColorStop(0.85,'rgba(100,170,255,0.8)');
+    ulg.addColorStop(1,'transparent');
+    ctx.fillStyle = ulg;
+    ctx.fillRect(W/2-ulW/2, ulY, ulW, 1.5);
+    /* diamond cap left */
+    ctx.save(); ctx.translate(W/2-ulW/2+12, ulY+0.75); ctx.rotate(Math.PI/4);
+    ctx.fillStyle='rgba(150,200,255,0.7)';
+    ctx.fillRect(-3,-3,6,6); ctx.restore();
+    /* diamond cap right */
+    ctx.save(); ctx.translate(W/2+ulW/2-12, ulY+0.75); ctx.rotate(Math.PI/4);
+    ctx.fillStyle='rgba(150,200,255,0.7)';
+    ctx.fillRect(-3,-3,6,6); ctx.restore();
+
+    /* ── Sub-line with italic serif feel via letter-spacing ── */
+    ctx.globalAlpha = easeOutCubic(Math.min(1,(f-50)/40)) * 0.78;
+    ctx.font = 'italic 400 '+sfs+'px Georgia,serif';
+    ctx.fillStyle = 'rgba(180,215,255,0.88)';
+    ctx.textBaseline = 'top';
+    ctx.fillText('Not just code. Not just interfaces. Something far greater.', W/2, ulY + 10);
+
+    ctx.restore();
+  }
+
+  /* ── 8. TYPEWRITER — Zone C, elegant quote panel ── */
+  var twAreaY = headH + orbitZoneH + 16;
+  var twStart = f > 80;
+
+  if(twStart){
+    var twReveal = easeOutCubic(Math.min(1,(f-80)/40));
+
+    /* advance typewriter */
+    if(!_twDone){
+      _twPause++;
+      if(_twPause % 2 === 0){
+        if(_twChar < TYPEWRITER_LINES[_twLine].length){
+          _twChar++;
+        } else if(_twLine < TYPEWRITER_LINES.length-1){
+          _twLine++; _twChar = 0;
+        } else {
+          _twDone = true;
+        }
+      }
+    }
+
+    /* ── Frosted glass pill background ── */
+    var pillPad = 22;
+    var pillH   = twLines * twLineH + pillPad * 2;
+    var pillW   = Math.min(W * 0.82, 680);
+    var pillX   = W/2 - pillW/2;
+    var pillY   = twAreaY - pillPad;
+    ctx.save();
+    ctx.globalAlpha = twReveal * 0.22;
+    ctx.beginPath(); ctx.roundRect(pillX, pillY, pillW, pillH, 14);
+    ctx.fillStyle = 'rgba(30,60,120,0.55)'; ctx.fill();
+    ctx.restore();
+    /* pill border */
+    ctx.save();
+    ctx.globalAlpha = twReveal * 0.35;
+    var pillBorder = ctx.createLinearGradient(pillX, pillY, pillX+pillW, pillY+pillH);
+    pillBorder.addColorStop(0,'rgba(100,170,255,0.6)');
+    pillBorder.addColorStop(0.5,'rgba(140,200,255,0.3)');
+    pillBorder.addColorStop(1,'rgba(100,170,255,0.6)');
+    ctx.strokeStyle = pillBorder; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.roundRect(pillX, pillY, pillW, pillH, 14);
+    ctx.stroke();
+    ctx.restore();
+
+    /* ── Large decorative opening quote mark ── */
+    ctx.save();
+    ctx.globalAlpha = twReveal * 0.12;
+    ctx.font = '800 '+(twFs*4.5)+'px Georgia,serif';
+    ctx.fillStyle = 'rgba(120,180,255,1)';
+    ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+    ctx.fillText('“', pillX+14, pillY-twFs*1.2);
+    ctx.restore();
+
+    /* ── Vertical accent bar left ── */
+    ctx.save();
+    ctx.globalAlpha = twReveal * 0.55;
+    var vBarGrad = ctx.createLinearGradient(0, pillY, 0, pillY+pillH);
+    vBarGrad.addColorStop(0,'transparent');
+    vBarGrad.addColorStop(0.3,'rgba(100,170,255,0.7)');
+    vBarGrad.addColorStop(0.7,'rgba(100,170,255,0.7)');
+    vBarGrad.addColorStop(1,'transparent');
+    ctx.fillStyle = vBarGrad;
+    ctx.fillRect(pillX+10, pillY+8, 2, pillH-16);
+    ctx.restore();
+
+    /* ── Text lines ── */
+    for(var li=0; li<=_twLine; li++){
+      var lineText = li < _twLine
+        ? TYPEWRITER_LINES[li]
+        : TYPEWRITER_LINES[li].slice(0, _twChar);
+      ctx.save();
+      ctx.globalAlpha = (li < _twLine ? 0.72 : 0.97) * twReveal;
+      /* first line bolder + slightly larger */
+      var lSize = li===0 ? twFs*1.05 : twFs;
+      ctx.font = (li===0 ? '700' : '400')+' '+lSize+'px Plus Jakarta Sans,sans-serif';
+      ctx.fillStyle = li===0 ? '#E8F4FF' : 'rgba(175,210,245,0.85)';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+      /* subtle per-line fade-in */
+      ctx.fillText(lineText, W/2, twAreaY + li*twLineH);
+      ctx.restore();
+    }
+
+    /* ── Blinking cursor — underscore style ── */
+    if(!_twDone || Math.floor(f/28)%2===0){
+      ctx.font = '400 '+twFs+'px Plus Jakarta Sans,sans-serif';
+      var cursorX = W/2 + ctx.measureText(
+        TYPEWRITER_LINES[_twLine].slice(0,_twChar)
+      ).width/2 + 3;
+      var cursorY = twAreaY + _twLine*twLineH + twFs - 1;
+      ctx.save();
+      ctx.globalAlpha = (0.5+0.5*Math.sin(f*0.16)) * twReveal;
+      ctx.fillStyle = 'rgba(140,210,255,0.9)';
+      ctx.fillRect(cursorX, cursorY, twFs*0.55, 2);
+      ctx.restore();
+    }
+
+    /* ── Closing small dots / ellipsis decoration ── */
+    if(_twDone){
+      ctx.save();
+      ctx.globalAlpha = easeOutCubic(Math.min(1,(f-_twDoneFrame||0)/30)) * 0.45;
+      for(var di=0;di<3;di++){
+        ctx.beginPath();
+        ctx.arc(W/2 + (di-1)*10, pillY+pillH+10, 2, 0, Math.PI*2);
+        ctx.fillStyle='rgba(100,170,255,0.7)'; ctx.fill();
+      }
+      ctx.restore();
+      if(!_twDoneFrame) _twDoneFrame=f;
+    }
+  }
+
+  /* ── 9. Corner accents ── */
+  ctx.save(); ctx.globalAlpha=0.07;
+  var cS=Math.min(70,W*0.07);
+  ctx.beginPath();
+  ctx.moveTo(0,0); ctx.lineTo(cS,0);
+  ctx.moveTo(0,0); ctx.lineTo(0,cS);
+  ctx.moveTo(W,H); ctx.lineTo(W-cS,H);
+  ctx.moveTo(W,H); ctx.lineTo(W,H-cS);
+  ctx.strokeStyle='rgba(100,160,220,0.9)'; ctx.lineWidth=1.5; ctx.stroke();
+  ctx.restore();
+
+  ctx.textBaseline='alphabetic'; ctx.globalAlpha=1;
+}
+
+/* ── Open / Close ── */
+function openFuture(){
+  var overlay = document.getElementById('futureOverlay');
+  var canvas  = document.getElementById('futureCanvas');
+  document.body.style.overflow='hidden';
+  overlay.classList.add('open');
+  _fFrame=0; _twLine=0; _twChar=0; _twPause=0; _twDone=false; _fParticles=null;
+  ORBIT_NODES.forEach(function(nd){ nd.angle = nd.angle; }); /* keep current angles */
+  if(_fRaf) cancelAnimationFrame(_fRaf);
+  function loop(){ drawFuture(canvas); _fFrame++; _fRaf=requestAnimationFrame(loop); }
+  loop();
+}
+function closeFuture(){
+  document.getElementById('futureOverlay').classList.remove('open');
+  document.body.style.overflow='';
+  if(_fRaf){ cancelAnimationFrame(_fRaf); _fRaf=null; }
+}
+
+document.getElementById('openFutureModal').addEventListener('click', openFuture);
+document.getElementById('futureClose').addEventListener('click', closeFuture);
+document.addEventListener('keydown', function(e){
+  if(e.key==='Escape' && document.getElementById('futureOverlay').classList.contains('open'))
+    closeFuture();
+});
 
 })();
 </script>
