@@ -865,6 +865,101 @@ section { padding: 6rem 3.5rem; position: relative; z-index: 1; }
   .ap-step-text strong { font-size: 0.9rem; }
   .ap-step-text span { font-size: 0.82rem; }
 }
+
+/* ═══════════════════════════════════════════
+   NAV — Principals & Architects button
+═══════════════════════════════════════════ */
+.nav-btn-pillars {
+  font-weight: 600 !important;
+  background: var(--accent) !important;
+  color: #fff !important;
+  border-radius: 8px !important;
+  text-decoration: none !important;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+.nav-btn-pillars:hover {
+  background: var(--accent2) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(45,106,143,0.3) !important;
+  color: #fff !important;
+}
+
+/* ═══════════════════════════════════════════
+   PILLARS FULL-SCREEN MODAL
+═══════════════════════════════════════════ */
+.pillars-overlay {
+  position: fixed; inset: 0; z-index: 2000;
+  background: #0D1520;
+  display: flex; flex-direction: column;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+.pillars-overlay.open { opacity: 1; pointer-events: all; }
+
+.pillars-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.25rem 2rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  flex-shrink: 0;
+}
+.pillars-header-left { display: flex; align-items: center; gap: 0.75rem; }
+.pillars-header-icon {
+  font-size: 1.5rem; line-height: 1;
+}
+.pillars-header-title {
+  font-size: 1.25rem; font-weight: 800;
+  color: #fff; letter-spacing: -0.02em;
+}
+.pillars-header-sub {
+  font-size: 0.8rem; color: rgba(255,255,255,0.45);
+  margin-top: 0.1rem;
+}
+.pillars-close {
+  width: 38px; height: 38px; border-radius: 10px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.6);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 1rem;
+  transition: all 0.2s; flex-shrink: 0;
+}
+.pillars-close:hover { background: rgba(255,255,255,0.15); color: #fff; }
+
+.pillars-canvas-wrap {
+  flex: 1; position: relative; overflow: hidden;
+}
+.pillars-canvas-wrap canvas {
+  display: block; width: 100%; height: 100%;
+}
+
+/* Tooltip */
+.pillars-tooltip {
+  position: absolute; pointer-events: none;
+  background: rgba(13,21,32,0.95);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 10px; padding: 0.65rem 0.9rem;
+  max-width: 220px; backdrop-filter: blur(8px);
+  opacity: 0; transition: opacity 0.2s;
+  transform: translate(-50%, -110%);
+  z-index: 10;
+}
+.pillars-tooltip.visible { opacity: 1; }
+.pillars-tooltip-title {
+  font-size: 0.82rem; font-weight: 700; color: #fff;
+  margin-bottom: 0.2rem;
+}
+.pillars-tooltip-desc {
+  font-size: 0.75rem; color: rgba(255,255,255,0.55);
+  line-height: 1.5;
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .pillars-header { padding: 1rem 1.25rem 0.85rem; }
+  .pillars-header-title { font-size: 1rem; }
+  .nav-btn-pillars { display: none; }  /* hidden on mobile — only show in hamburger */
+}
 </style>
 </head>
 <body>
@@ -882,6 +977,7 @@ section { padding: 6rem 3.5rem; position: relative; z-index: 1; }
     <li><a href="#design-system">Design Systems</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#leadership">Leadership</a></li>
+    <li><a href="#" class="nav-btn-pillars" id="openPillars">Architecture Principles</a></li>
     <li><a href="#contact" class="nav-cta">Contact</a></li>
   </ul>
 </nav>
@@ -2666,6 +2762,943 @@ document.querySelectorAll('.arch-card[data-popup]').forEach(function(card) {
 apClose.addEventListener('click', closePopup);
 overlay.addEventListener('click', function(e) { if (e.target === overlay) closePopup(); });
 document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closePopup(); });
+
+})();
+</script>
+
+
+<!-- ═══════════ PRINCIPALS & ARCHITECTS MODAL ═══════════ -->
+<div class="pillars-overlay" id="pillarsOverlay">
+
+  <!-- ── Header ── -->
+  <div class="pillars-header">
+    <div class="pillars-header-left">
+      <div class="pillars-header-icon">🗺️</div>
+      <div>
+        <div class="pillars-header-title">The Framework: Six Strategic Pillars</div>
+        <div class="pillars-header-sub">Architect Influence Framework — hover nodes to explore</div>
+      </div>
+    </div>
+    <div class="pillars-close" id="pillarsClose">✕</div>
+  </div>
+
+  <!-- ── Scrollable body ── -->
+  <div class="pillars-body" id="pillarsBody">
+
+    <!-- SECTION 1: Mind-map canvas -->
+    <div class="pillars-section pillars-section--canvas">
+      <div class="pillars-canvas-wrap" id="pillarsCanvasWrap">
+        <canvas id="pillarsCanvas"></canvas>
+        <div class="pillars-tooltip" id="pillarsTooltip">
+          <div class="pillars-tooltip-title" id="pillarsTooltipTitle"></div>
+          <div class="pillars-tooltip-desc"  id="pillarsTooltipDesc"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: Influence Matrix -->
+    <div class="pillars-section pillars-section--matrix" id="pillarsMatrixSection">
+      <div class="pillars-section-eyebrow">Strategic Analysis</div>
+      <h2 class="pillars-section-title">Architect Influence Matrix</h2>
+      <p class="pillars-section-lead">Where do principals spend their influence? Map every challenge by technical complexity vs organisational complexity to know exactly when to act alone — and when to escalate.</p>
+      <div class="pim-wrap" id="pimWrap">
+        <canvas id="pimCanvas"></canvas>
+      </div>
+    </div>
+
+    <!-- SECTION 3: Diagnose iceberg -->
+    <div class="pillars-section pillars-section--diagnose" id="pillarsDiagnoseSection">
+      <div class="pillars-section-eyebrow">Pillar 3 · 🔍 Diagnose</div>
+      <h2 class="pillars-section-title">Surface Anomalies With Root-Cause Chains</h2>
+      <h3 class="pillars-section-subtitle">The Symptom-to-Cause Iceberg</h3>
+      <p class="pillars-section-lead">Most stakeholders see only symptoms. Your job is to show the iceberg beneath the surface.</p>
+      <div class="iceberg-wrap" id="icebergWrap">
+        <canvas id="icebergCanvas"></canvas>
+      </div>
+    </div>
+
+  </div><!-- /pillars-body -->
+</div>
+
+<style>
+/* ── Scrollable body inside modal ── */
+.pillars-overlay { flex-direction: column; }
+.pillars-body {
+  flex: 1; overflow-y: auto; overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+.pillars-body::-webkit-scrollbar { width: 6px; }
+.pillars-body::-webkit-scrollbar-track { background: rgba(255,255,255,0.04); }
+.pillars-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
+
+/* ── Section shell ── */
+.pillars-section {
+  padding: 0 0 4rem;
+}
+.pillars-section--canvas {
+  padding: 0;
+}
+.pillars-section--matrix,
+.pillars-section--diagnose {
+  max-width: 960px; margin: 0 auto;
+  padding: 4rem 2rem;
+}
+.pillars-section-eyebrow {
+  font-size: 0.7rem; font-weight: 800; letter-spacing: 0.12em;
+  text-transform: uppercase; color: rgba(255,255,255,0.35);
+  margin-bottom: 0.6rem;
+}
+.pillars-section-title {
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 800; color: #fff;
+  letter-spacing: -0.03em; margin: 0 0 0.5rem;
+  line-height: 1.15;
+}
+.pillars-section-subtitle {
+  font-size: 1rem; font-weight: 700;
+  color: rgba(255,255,255,0.65); margin: 1.5rem 0 0.4rem;
+}
+.pillars-section-lead {
+  font-size: 0.95rem; color: rgba(255,255,255,0.5);
+  line-height: 1.75; max-width: 680px; margin-bottom: 2.5rem;
+}
+
+/* ── Canvas wrappers ── */
+.pillars-canvas-wrap {
+  position: relative; width: 100%; height: 68vh; min-height: 500px;
+}
+.pillars-canvas-wrap canvas { display: block; width: 100%; height: 100%; }
+
+.pim-wrap, .iceberg-wrap {
+  width: 100%; position: relative;
+  border-radius: 16px; overflow: hidden;
+}
+.pim-wrap canvas, .iceberg-wrap canvas {
+  display: block; width: 100%;
+}
+
+/* ── Section divider ── */
+.pillars-section--matrix,
+.pillars-section--diagnose {
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+</style>
+
+<script>
+(function(){
+'use strict';
+
+/* ═══════════════════════════════════════════
+   EASING UTILS (shared across all 3 canvases)
+═══════════════════════════════════════════ */
+function eoC(t){ t=Math.min(1,Math.max(0,t)); return 1-Math.pow(1-t,3); }
+function eoB(t){ t=Math.min(1,Math.max(0,t)); var c1=1.70158,c3=c1+1; return 1+c3*Math.pow(t-1,3)+c1*Math.pow(t-1,2); }
+function lerp(a,b,t){ return a+(b-a)*t; }
+var _pH={};
+function pLift(k,h){ if(_pH[k]===undefined)_pH[k]=0; _pH[k]+=((h?1:0)-_pH[k])*0.13; return _pH[k]; }
+
+/* ═══════════════════════════════════════════
+   SECTION 1 — MIND MAP
+   All positions in 0..1 normalised to canvas W×H
+   so the layout matches the reference image exactly.
+═══════════════════════════════════════════ */
+
+/* Each pillar: px,py = centre position (0..1 of W,H)
+   Each leaf:   lx,ly = centre position (0..1 of W,H)
+   No angle maths — pure fixed layout.                */
+var MAP = {
+  hub: { label:['Architect','Influence','Framework'], x:0.5, y:0.47 },
+  pillars:[
+    { id:'predict',     label:'Predict',     color:'#A8D455',
+      x:0.36, y:0.30,
+      leaves:[
+        { label:'Predictive Timelines', x:0.38, y:0.17 },
+        { label:'Scenario Planning',    x:0.29, y:0.22 },
+        { label:'Impact Modeling',      x:0.27, y:0.31 }
+      ]
+    },
+    { id:'communicate', label:'Communicate', color:'#FF7BAC',
+      x:0.65, y:0.27,
+      leaves:[
+        { label:'Visual Storytelling',   x:0.73, y:0.16 },
+        { label:'Data-Driven Campaigns', x:0.82, y:0.25 },
+        { label:'Cadence & Format',      x:0.79, y:0.35 }
+      ]
+    },
+    { id:'govern',      label:'Govern',      color:'#FF7A5A',
+      x:0.75, y:0.45,
+      leaves:[
+        { label:'Architectural Review Board', x:0.84, y:0.40 },
+        { label:'Decision Logs',              x:0.84, y:0.50 },
+        { label:'Accountability Structures',  x:0.82, y:0.59 }
+      ]
+    },
+    { id:'escalate',    label:'Escalate',    color:'#FF5EC4',
+      x:0.67, y:0.62,
+      leaves:[
+        { label:'Executive Briefing',   x:0.72, y:0.70 },
+        { label:'Stakeholder Mapping',  x:0.77, y:0.77 },
+        { label:'Hierarchy Engagement', x:0.62, y:0.80 }
+      ]
+    },
+    { id:'translate',   label:'Translate',   color:'#F5E84A',
+      x:0.37, y:0.64,
+      leaves:[
+        { label:'Debt → Liability',              x:0.27, y:0.69 },
+        { label:'Instability → Revenue Threat',  x:0.22, y:0.60 },
+        { label:'Technical → Business Risk',     x:0.38, y:0.77 }
+      ]
+    },
+    { id:'diagnose',    label:'Diagnose',    color:'#C67FE8',
+      x:0.30, y:0.43,
+      leaves:[
+        { label:'Anomaly Tracking',  x:0.22, y:0.36 },
+        { label:'Root Cause Chains', x:0.16, y:0.44 },
+        { label:'Symptom Linking',   x:0.20, y:0.53 }
+      ]
+    }
+  ]
+};
+
+var _mState = { animStart:null, raf:null,
+                hovP:null, hovL:null, dpr: window.devicePixelRatio||1 };
+
+function drawMap(canvas, frame){
+  var wrap=document.getElementById('pillarsCanvasWrap');
+  var dpr=_mState.dpr;
+  var W=wrap.clientWidth, H=wrap.clientHeight;
+  if(canvas.width!==Math.round(W*dpr)||canvas.height!==Math.round(H*dpr)){
+    canvas.width=Math.round(W*dpr); canvas.height=Math.round(H*dpr);
+    canvas.style.width=W+'px'; canvas.style.height=H+'px';
+  }
+  var ctx=canvas.getContext('2d');
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.clearRect(0,0,W,H);
+  if(_mState.animStart===null) _mState.animStart=frame;
+  var el=frame-_mState.animStart;
+
+  /* grid */
+  ctx.save(); ctx.strokeStyle='rgba(255,255,255,0.025)'; ctx.lineWidth=1;
+  for(var gx=0;gx<W;gx+=56){ctx.beginPath();ctx.moveTo(gx,0);ctx.lineTo(gx,H);ctx.stroke();}
+  for(var gy=0;gy<H;gy+=56){ctx.beginPath();ctx.moveTo(0,gy);ctx.lineTo(W,gy);ctx.stroke();}
+  ctx.restore();
+
+  var hub=MAP.hub;
+  var hx=hub.x*W, hy=hub.y*H;
+  var hR=Math.min(W,H)*0.10;
+
+  /* hub glow */
+  ctx.save();
+  var hg=ctx.createRadialGradient(hx,hy,0,hx,hy,hR*2.5);
+  hg.addColorStop(0,'rgba(58,111,196,0.20)'); hg.addColorStop(1,'rgba(58,111,196,0)');
+  ctx.globalAlpha=eoC(el/30);
+  ctx.beginPath();ctx.arc(hx,hy,hR*2.5,0,Math.PI*2);ctx.fillStyle=hg;ctx.fill();
+  ctx.restore();
+
+  /* font size scale based on canvas width */
+  var fs = Math.max(10, Math.min(13, W*0.013));
+  var lfs = Math.max(9,  Math.min(11, W*0.011));
+
+  MAP.pillars.forEach(function(p,pi){
+    var pDelay=18+pi*9;
+    var pT=eoB(Math.max(0,(el-pDelay)/26));
+    var pA=Math.min(1,Math.max(0,(el-pDelay)/26));
+    if(pA<=0) return;
+
+    var isHP = _mState.hovP===pi;
+    var hlv  = pLift('mp_'+pi, isHP)*8;
+    var px   = p.x*W, py = p.y*H;
+    /* lift toward hub */
+    var dxH  = hx-px, dyH=hy-py, dLen=Math.sqrt(dxH*dxH+dyH*dyH)||1;
+    px += (dxH/dLen)*hlv;  py += (dyH/dLen)*hlv;
+
+    /* spoke hub→pillar */
+    ctx.save(); ctx.globalAlpha=pA*0.65;
+    ctx.beginPath();
+    ctx.moveTo(hx+(dxH/dLen)*(-hR)*-1*0+hx-(dxH/dLen)*hR, hy-(dyH/dLen)*hR); /* edge of hub */
+    /* simpler: just draw from hub centre, hub circle will overdraw */
+    ctx.moveTo(hx,hy); ctx.lineTo(px,py);
+    ctx.strokeStyle=p.color; ctx.lineWidth=isHP?2.5:1.8; ctx.stroke();
+    ctx.restore();
+
+    /* leaves */
+    p.leaves.forEach(function(lf,li){
+      var lDelay=pDelay+7+li*6;
+      var lT=eoB(Math.max(0,(el-lDelay)/22));
+      var lA=Math.min(1,Math.max(0,(el-lDelay)/22));
+      if(lA<=0) return;
+
+      var isHL = _mState.hovL && _mState.hovL.pi===pi && _mState.hovL.li===li;
+      var llv  = pLift('ml_'+pi+'_'+li, isHL)*6;
+      var lx   = lf.x*W, ly = lf.y*H;
+      var dxP  = px-lx, dyP=py-ly, dlP=Math.sqrt(dxP*dxP+dyP*dyP)||1;
+      lx += -(dxP/dlP)*llv; ly += -(dyP/dlP)*llv;
+
+      /* dashed spoke pillar→leaf */
+      ctx.save(); ctx.globalAlpha=lA*0.40;
+      ctx.beginPath(); ctx.moveTo(px,py); ctx.lineTo(lx,ly);
+      ctx.strokeStyle=p.color; ctx.lineWidth=isHL?2:1.3;
+      ctx.setLineDash([5,5]); ctx.stroke(); ctx.setLineDash([]);
+      ctx.restore();
+
+      /* leaf box — auto-width from text */
+      ctx.font=(isHL?'700':'500')+' '+lfs+'px Plus Jakarta Sans,sans-serif';
+      var tw=ctx.measureText(lf.label).width;
+      var lw=tw+24, lh=28;
+
+      ctx.save();
+      ctx.globalAlpha=lA;
+      ctx.translate(lx,ly); ctx.scale(lT,lT); ctx.translate(-lx,-ly);
+      ctx.shadowColor=p.color+(isHL?'55':'22'); ctx.shadowBlur=isHL?16:5; ctx.shadowOffsetY=isHL?3:1;
+      ctx.beginPath(); ctx.roundRect(lx-lw/2,ly-lh/2,lw,lh,7);
+      ctx.fillStyle=isHL?p.color+'EE':p.color+'22'; ctx.fill();
+      ctx.shadowBlur=0; ctx.shadowOffsetY=0;
+      ctx.strokeStyle=isHL?p.color:p.color+'66'; ctx.lineWidth=isHL?1.8:1; ctx.stroke();
+      ctx.fillStyle=isHL?'#fff':p.color;
+      ctx.textAlign='center'; ctx.textBaseline='middle';
+      ctx.fillText(lf.label,lx,ly);
+      ctx.restore();
+      lf._hx=lx; lf._hy=ly; lf._hw=lw; lf._hh=lh;
+    });
+
+    /* pillar box */
+    ctx.font=(isHP?'800':'700')+' '+fs+'px Plus Jakarta Sans,sans-serif';
+    var ptw=ctx.measureText(p.label).width;
+    var pw=ptw+32, ph=36;
+
+    ctx.save();
+    ctx.globalAlpha=pA;
+    ctx.translate(px,py); ctx.scale(pT,pT); ctx.translate(-px,-py);
+    ctx.shadowColor=p.color+(isHP?'88':'44'); ctx.shadowBlur=isHP?22:8; ctx.shadowOffsetY=isHP?5:2;
+    ctx.beginPath(); ctx.roundRect(px-pw/2,py-ph/2,pw,ph,10);
+    ctx.fillStyle=isHP?p.color:p.color+'44'; ctx.fill();
+    ctx.shadowBlur=0; ctx.shadowOffsetY=0;
+    ctx.strokeStyle=p.color; ctx.lineWidth=isHP?2.2:1.6; ctx.stroke();
+    ctx.fillStyle=isHP?'#fff':p.color;
+    ctx.textAlign='center'; ctx.textBaseline='middle';
+    ctx.fillText(p.label,px,py);
+    ctx.restore();
+    p._hx=px; p._hy=py; p._hw=pw; p._hh=ph;
+  });
+
+  /* hub (drawn last so it's always on top) */
+  var hsT=eoB(Math.max(0,(el-5)/22));
+  var hsA=Math.min(1,Math.max(0,(el-5)/22));
+  ctx.save();
+  ctx.globalAlpha=hsA;
+  ctx.translate(hx,hy); ctx.scale(hsT,hsT); ctx.translate(-hx,-hy);
+  var hgrad=ctx.createRadialGradient(hx-hR*0.2,hy-hR*0.2,0,hx,hy,hR);
+  hgrad.addColorStop(0,'#4A80D4'); hgrad.addColorStop(1,'#1A2F6E');
+  ctx.shadowColor='rgba(58,111,196,0.7)'; ctx.shadowBlur=35;
+  ctx.beginPath(); ctx.arc(hx,hy,hR,0,Math.PI*2);
+  ctx.fillStyle=hgrad; ctx.fill(); ctx.shadowBlur=0;
+  ctx.strokeStyle='rgba(120,160,255,0.35)'; ctx.lineWidth=2; ctx.stroke();
+  var hfs=Math.max(12,Math.min(15,W*0.014));
+  ctx.font='800 '+hfs+'px Plus Jakarta Sans,sans-serif'; ctx.fillStyle='#fff';
+  ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.fillText('Architect',hx,hy-hfs*0.7);
+  ctx.font='600 '+(hfs-2)+'px Plus Jakarta Sans,sans-serif'; ctx.fillStyle='rgba(255,255,255,0.72)';
+  ctx.fillText('Influence',hx,hy+hfs*0.1);
+  ctx.fillText('Framework',hx,hy+hfs*0.9);
+  ctx.restore();
+
+  ctx.textBaseline='alphabetic'; ctx.globalAlpha=1;
+}
+
+/* hit test */
+function mapHit(mx,my){
+  for(var pi=0;pi<MAP.pillars.length;pi++){
+    var p=MAP.pillars[pi];
+    for(var li=0;li<p.leaves.length;li++){
+      var lf=p.leaves[li];
+      if(lf._hx!==undefined&&mx>=lf._hx-lf._hw/2&&mx<=lf._hx+lf._hw/2&&my>=lf._hy-lf._hh/2&&my<=lf._hy+lf._hh/2)
+        return {type:'leaf',pi:pi,li:li};
+    }
+    if(p._hx!==undefined&&mx>=p._hx-p._hw/2&&mx<=p._hx+p._hw/2&&my>=p._hy-p._hh/2&&my<=p._hy+p._hh/2)
+      return {type:'pillar',pi:pi};
+  }
+  return null;
+}
+function mapTooltip(hit,rect){
+  var tt=document.getElementById('pillarsTooltip');
+  var dpr=_mState.dpr;
+  var canvas=document.getElementById('pillarsCanvas');
+  var scX=canvas.clientWidth/(canvas.width/dpr);
+  var scY=canvas.clientHeight/(canvas.height/dpr);
+  var p=MAP.pillars[hit.pi];
+  var item=hit.type==='leaf'?p.leaves[hit.li]:p;
+  var desc={
+    predict:'Forecast architectural trajectories before they become crises.',
+    communicate:'Translate architecture into stories stakeholders act on.',
+    govern:'Establish guardrails that scale without becoming bureaucracy.',
+    escalate:'Surface blockers to the right authority at the right moment.',
+    translate:'Convert technical reality into business language executives understand.',
+    diagnose:'Identify root causes hiding behind surface-level symptoms.'
+  };
+  var leafDesc={
+    'Predictive Timelines':'Estimate delivery confidence using historical velocity.',
+    'Scenario Planning':'Contingency branches for high-risk architectural pivots.',
+    'Impact Modeling':'Model downstream effects of architectural decisions.',
+    'Visual Storytelling':'Diagrams and prototypes make complex systems legible.',
+    'Data-Driven Campaigns':'Proposals backed with cost, risk, and velocity data.',
+    'Cadence & Format':'Right message, right medium, right frequency.',
+    'Architectural Review Board':'Structured forum for cross-team decisions.',
+    'Decision Logs':'Searchable ADR history — never re-litigate settled debates.',
+    'Accountability Structures':'RACI ownership maps tied to architecture components.',
+    'Executive Briefing':'One-page risk summaries timed to planning cycles.',
+    'Stakeholder Mapping':'Identify sponsors, blockers, and champions per initiative.',
+    'Hierarchy Engagement':'Navigate org structure to unblock stalled decisions.',
+    'Debt → Liability':'Frame tech debt as a financial liability.',
+    'Instability → Revenue Threat':'Map fragility to revenue-at-risk metrics.',
+    'Technical → Business Risk':'Risk registers mapping architecture gaps to outcomes.',
+    'Anomaly Tracking':'Detect patterns in incidents and delivery failures.',
+    'Root Cause Chains':'Trace cascading failures back to architectural decisions.',
+    'Symptom Linking':'Connect team complaints to shared architectural causes.'
+  };
+  var lbl=hit.type==='pillar'?p.label:item.label;
+  var dsc=hit.type==='pillar'?desc[p.id]:(leafDesc[item.label]||'');
+  document.getElementById('pillarsTooltipTitle').textContent=lbl;
+  document.getElementById('pillarsTooltipDesc').textContent=dsc;
+  var tx=(hit.type==='pillar'?p._hx:item._hx);
+  var ty=(hit.type==='pillar'?p._hy-p._hh/2:item._hy-item._hh/2);
+  tt.style.left=(rect.left+tx*scX)+'px';
+  tt.style.top =(rect.top +ty*scY-8)+'px';
+  tt.classList.add('visible');
+}
+function hideTooltip(){ document.getElementById('pillarsTooltip').classList.remove('visible'); }
+
+/* ═══════════════════════════════════════════
+   SECTION 2 — INFLUENCE MATRIX (canvas)
+═══════════════════════════════════════════ */
+var MATRIX_POINTS=[
+  /* [label, techComplexity 0..1, orgComplexity 0..1] */
+  ['Executive Briefing',        0.18, 0.82],
+  ['Budget Negotiation',        0.12, 0.72],
+  ['Cross-team Alignment',      0.32, 0.65],
+  ['Tech Debt Communication',   0.48, 0.52],
+  ['Distributed Systems Rewrite',0.85,0.88],
+  ['Legacy Migration',          0.68, 0.60],
+  ['API Design',                0.60, 0.22],
+  ['Database Optimization',     0.55, 0.18]
+];
+var MATRIX_QUADS=[
+  { label:"Architect's Leverage Zone", x:0, color:'rgba(100,130,220,0.12)', border:'rgba(100,130,220,0.3)' },
+  { label:'Most Dangerous Zone',       x:1, color:'rgba(220,100,100,0.10)', border:'rgba(220,100,100,0.25)' },
+  { label:'Junior Territory',          x:2, color:'rgba(180,180,200,0.07)', border:'rgba(180,180,200,0.2)' },
+  { label:'Solvable Alone',            x:3, color:'rgba(100,200,150,0.09)', border:'rgba(100,200,150,0.25)' }
+];
+var _pimState={animStart:null, raf:null, hov:null};
+
+/* Matrix particle system */
+var _pimParticles=null;
+function _pimInitParticles(W,H,padL,padR,padT,padB){
+  if(_pimParticles&&_pimParticles.W===W) return;
+  _pimParticles={W:W,pts:[]};
+  for(var i=0;i<28;i++){
+    _pimParticles.pts.push({
+      x:padL+Math.random()*(W-padL-padR),
+      y:padT+Math.random()*(H-padT-padB),
+      vx:(Math.random()-0.5)*0.35,
+      vy:(Math.random()-0.5)*0.35,
+      r:Math.random()*1.6+0.4,
+      a:Math.random()*0.18+0.04,
+      life:Math.random()
+    });
+  }
+}
+
+function drawMatrix(canvas,frame){
+  var wrap=document.getElementById('pimWrap');
+  var dpr=window.devicePixelRatio||1;
+  var W=wrap.clientWidth;
+  var H=Math.round(W*0.74);
+  wrap.style.height=H+'px';
+  if(canvas.width!==Math.round(W*dpr)||canvas.height!==Math.round(H*dpr)){
+    canvas.width=Math.round(W*dpr); canvas.height=Math.round(H*dpr);
+    canvas.style.width=W+'px'; canvas.style.height=H+'px';
+    _pimParticles=null;
+  }
+  var ctx=canvas.getContext('2d');
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.clearRect(0,0,W,H);
+  if(_pimState.animStart===null) _pimState.animStart=frame;
+  var el=frame-_pimState.animStart;
+  var revT=eoC(Math.min(1,el/40));
+
+  var padL=62, padR=28, padT=56, padB=48;
+  var gW=W-padL-padR, gH=H-padT-padB;
+
+  _pimInitParticles(W,H,padL,padR,padT,padB);
+
+  /* ── Background gradient ── */
+  var bgGrad=ctx.createLinearGradient(0,0,W,H);
+  bgGrad.addColorStop(0,'#0C1420');
+  bgGrad.addColorStop(1,'#0F1B2D');
+  ctx.fillStyle=bgGrad; ctx.fillRect(0,0,W,H);
+
+  /* ── Floating particles ── */
+  _pimParticles.pts.forEach(function(pt){
+    pt.x+=pt.vx; pt.y+=pt.vy; pt.life+=0.004;
+    if(pt.x<padL||pt.x>W-padR) pt.vx*=-1;
+    if(pt.y<padT||pt.y>H-padB) pt.vy*=-1;
+    var pa=pt.a*(0.5+0.5*Math.sin(pt.life*3));
+    ctx.save(); ctx.globalAlpha=pa*revT;
+    ctx.beginPath(); ctx.arc(pt.x,pt.y,pt.r,0,Math.PI*2);
+    ctx.fillStyle='#7EB8E8'; ctx.fill();
+    ctx.restore();
+  });
+
+  /* ── Subtle dot grid ── */
+  ctx.save(); ctx.globalAlpha=0.07*revT;
+  for(var gx=padL;gx<=W-padR;gx+=32){
+    for(var gy=padT;gy<=H-padB;gy+=32){
+      ctx.beginPath(); ctx.arc(gx,gy,1,0,Math.PI*2);
+      ctx.fillStyle='#6A8FB0'; ctx.fill();
+    }
+  }
+  ctx.restore();
+
+  /* ── Quadrant fills with gradient ── */
+  var QUAD_DEFS=[
+    { label:"Architect's Leverage Zone", fill:['#1E2D5A','#162240'], accent:'#4A6FBF', qi:0 },
+    { label:'Most Dangerous Zone',       fill:['#2E1520','#1E0E18'], accent:'#8B2040', qi:1 },
+    { label:'Junior Territory',          fill:['#141C2C','#111825'], accent:'#2A3A55', qi:2 },
+    { label:'Solvable Alone',            fill:['#0E2018','#0B1A14'], accent:'#1A5535', qi:3 }
+  ];
+  var quads=[
+    {x:padL,     y:padT,     w:gW/2, h:gH/2, qi:0},
+    {x:padL+gW/2,y:padT,     w:gW/2, h:gH/2, qi:1},
+    {x:padL,     y:padT+gH/2,w:gW/2, h:gH/2, qi:2},
+    {x:padL+gW/2,y:padT+gH/2,w:gW/2, h:gH/2, qi:3}
+  ];
+  quads.forEach(function(q){
+    var qd=QUAD_DEFS[q.qi];
+    ctx.save(); ctx.globalAlpha=revT;
+    /* gradient fill */
+    var qg=ctx.createLinearGradient(q.x,q.y,q.x+q.w,q.y+q.h);
+    qg.addColorStop(0,qd.fill[0]); qg.addColorStop(1,qd.fill[1]);
+    ctx.fillStyle=qg; ctx.fillRect(q.x,q.y,q.w,q.h);
+    /* border */
+    ctx.strokeStyle=qd.accent+'88'; ctx.lineWidth=1; ctx.strokeRect(q.x,q.y,q.w,q.h);
+    /* corner accent line */
+    ctx.globalAlpha=revT*0.4;
+    ctx.beginPath(); ctx.moveTo(q.x,q.y); ctx.lineTo(q.x+18,q.y);
+    ctx.moveTo(q.x,q.y); ctx.lineTo(q.x,q.y+18);
+    ctx.strokeStyle=qd.accent; ctx.lineWidth=2; ctx.stroke();
+    /* label */
+    ctx.globalAlpha=revT*0.65;
+    var qfs=Math.min(13,W*0.015);
+    ctx.font='700 '+qfs+'px Plus Jakarta Sans,sans-serif';
+    ctx.fillStyle='rgba(255,255,255,0.7)';
+    ctx.textAlign='left'; ctx.textBaseline='top';
+    ctx.fillText(qd.label, q.x+12, q.y+12);
+    ctx.restore();
+  });
+
+  /* ── Crosshair axis lines ── */
+  var axisT=eoC(Math.min(1,(el-20)/35));
+  if(axisT>0){
+    var cx2=padL+gW/2, cy2=padT+gH/2;
+    ctx.save(); ctx.globalAlpha=axisT*0.35;
+    /* vertical */
+    ctx.beginPath(); ctx.moveTo(cx2,padT); ctx.lineTo(cx2,padT+gH);
+    ctx.strokeStyle='rgba(140,180,220,0.6)'; ctx.lineWidth=1;
+    ctx.setLineDash([6,4]); ctx.stroke(); ctx.setLineDash([]);
+    /* horizontal */
+    ctx.beginPath(); ctx.moveTo(padL,cy2); ctx.lineTo(padL+gW,cy2);
+    ctx.stroke();
+    /* centre glow */
+    ctx.globalAlpha=axisT*0.25;
+    var cg=ctx.createRadialGradient(cx2,cy2,0,cx2,cy2,40);
+    cg.addColorStop(0,'rgba(100,160,220,0.4)'); cg.addColorStop(1,'rgba(100,160,220,0)');
+    ctx.fillStyle=cg; ctx.beginPath(); ctx.arc(cx2,cy2,40,0,Math.PI*2); ctx.fill();
+    ctx.restore();
+  }
+
+  /* ── Title ── */
+  ctx.save(); ctx.globalAlpha=revT;
+  var tfs=Math.min(18,W*0.022);
+  ctx.font='800 '+tfs+'px Plus Jakarta Sans,sans-serif';
+  ctx.fillStyle='#fff'; ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.shadowColor='rgba(100,160,255,0.3)'; ctx.shadowBlur=12;
+  ctx.fillText('Architect Influence Matrix',W/2,28);
+  ctx.shadowBlur=0;
+  ctx.restore();
+
+  /* ── Axis labels ── */
+  ctx.save(); ctx.globalAlpha=revT*0.55;
+  var afs=Math.min(11,W*0.013);
+  ctx.font='600 '+afs+'px Plus Jakarta Sans,sans-serif'; ctx.fillStyle='rgba(180,200,220,0.6)';
+  ctx.textAlign='center'; ctx.textBaseline='middle';
+  ctx.fillText('Low Technical Complexity', padL+gW/4, H-20);
+  ctx.fillText('High Technical Complexity', padL+gW*0.75, H-20);
+  ctx.save(); ctx.translate(18,padT+gH/4); ctx.rotate(-Math.PI/2);
+  ctx.fillText('High Org Complexity',0,0); ctx.restore();
+  ctx.save(); ctx.translate(18,padT+gH*0.75); ctx.rotate(-Math.PI/2);
+  ctx.fillText('Low Org Complexity',0,0); ctx.restore();
+  ctx.restore();
+
+  /* ── Data points ── */
+  MATRIX_POINTS.forEach(function(pt,i){
+    var ptDelay=30+i*9;
+    var ptT=eoB(Math.max(0,(el-ptDelay)/22));
+    var ptA=Math.min(1,Math.max(0,(el-ptDelay)/22));
+    if(ptA<=0) return;
+
+    var tx=padL+pt[1]*gW, ty=padT+(1-pt[2])*gH;
+    var isH=_pimState.hov===i;
+    var hv=pLift('pim_'+i,isH)*6;
+    var ty2=ty-hv;
+
+    ctx.save(); ctx.globalAlpha=ptA;
+    ctx.translate(tx,ty2); ctx.scale(ptT,ptT); ctx.translate(-tx,-ty2);
+
+    /* pulse ring (continuous) */
+    var pulse=(el%80)/80;
+    ctx.save(); ctx.globalAlpha=ptA*(0.2-pulse*0.2);
+    ctx.beginPath(); ctx.arc(tx,ty2,6+pulse*14,0,Math.PI*2);
+    ctx.strokeStyle=isH?'#A8D4FF':'#5A88C0'; ctx.lineWidth=1; ctx.stroke();
+    ctx.restore();
+
+    /* outer glow ring */
+    ctx.shadowColor='rgba(100,170,255,0.35)'; ctx.shadowBlur=isH?18:8;
+    ctx.beginPath(); ctx.arc(tx,ty2,isH?9:6,0,Math.PI*2);
+    ctx.fillStyle=isH?'#C0DEFF':'#3A5A8A'; ctx.fill(); ctx.shadowBlur=0;
+    ctx.strokeStyle=isH?'rgba(255,255,255,0.6)':'rgba(140,180,220,0.4)';
+    ctx.lineWidth=isH?2:1.5; ctx.stroke();
+
+    /* inner dot */
+    ctx.beginPath(); ctx.arc(tx,ty2,isH?4:2.5,0,Math.PI*2);
+    ctx.fillStyle=isH?'#fff':'#A0C4E8'; ctx.fill();
+
+    /* connector lines to axis if hovered */
+    if(isH){
+      ctx.save(); ctx.globalAlpha=0.25;
+      ctx.setLineDash([3,3]);
+      ctx.beginPath(); ctx.moveTo(tx,ty2); ctx.lineTo(tx,padT+gH);
+      ctx.moveTo(tx,ty2); ctx.lineTo(padL,ty2);
+      ctx.strokeStyle='rgba(160,200,255,0.5)'; ctx.lineWidth=1; ctx.stroke();
+      ctx.setLineDash([]); ctx.restore();
+    }
+
+    /* label */
+    var lfs2=Math.min(11,W*0.013);
+    ctx.font=(isH?'700':'500')+' '+lfs2+'px Plus Jakarta Sans,sans-serif';
+    ctx.fillStyle=isH?'#fff':'rgba(200,220,240,0.72)';
+    ctx.textAlign='left'; ctx.textBaseline='top';
+    ctx.fillText(pt[0], tx+13, ty2+2);
+    ctx.restore();
+    pt._hx=tx; pt._hy=ty2; pt._hr=12;
+  });
+
+  ctx.textBaseline='alphabetic'; ctx.globalAlpha=1;
+}
+
+/* ═══════════════════════════════════════════
+   SECTION 3 — DIAGNOSE ICEBERG (canvas)
+═══════════════════════════════════════════ */
+var LAYERS=[
+  { emoji:'🚨', badge:'VISIBLE',       text:'Spike in production bugs this sprint',                                           bg:'#E8524A', border:'#C03030', textC:'#fff'  },
+  { emoji:'◆',  badge:'LAYER 1',       text:'Untested shared utilities modified under time pressure',                         bg:'#F5943A', border:'#C06010', textC:'#fff'  },
+  { emoji:'◆',  badge:'LAYER 2',       text:'No domain boundary enforcement — cross-cutting changes are invisible',           bg:'#5B9BD5', border:'#3070AA', textC:'#fff'  },
+  { emoji:'●',  badge:'LAYER 3',       text:"Architecture Decision #47 (2021) — 'monorepo with shared kernel' never revisited",bg:'#9C5FC8', border:'#6B2AA0', textC:'#fff'  },
+  { emoji:'💀', badge:'ROOT CAUSE',    text:'No Architectural Review Board; decisions made locally, never globally',          bg:'#1A1A2E', border:'#444466', textC:'#fff'  },
+  { emoji:'📉', badge:'BUSINESS IMPACT',text:'23% increase in hotfix deploys; $40K/month in unplanned incident costs',       bg:'#1F7A4A', border:'#0D5030', textC:'#fff'  }
+];
+var _ibState={animStart:null, raf:null, hov:null};
+
+/* depth level labels for iceberg */
+var DEPTH_LABELS=['Surface','Layer 1','Layer 2','Layer 3','Root','Impact'];
+
+function drawIceberg(canvas,frame){
+  var wrap=document.getElementById('icebergWrap');
+  var dpr=window.devicePixelRatio||1;
+  var W=wrap.clientWidth;
+  var padT=24, padB=24, rowH=Math.min(64,Math.max(48,W*0.075)), gapY=11;
+  var H=padT+padB+LAYERS.length*(rowH+gapY)-gapY;
+  wrap.style.height=H+'px';
+  if(canvas.width!==Math.round(W*dpr)||canvas.height!==Math.round(H*dpr)){
+    canvas.width=Math.round(W*dpr); canvas.height=Math.round(H*dpr);
+    canvas.style.width=W+'px'; canvas.style.height=H+'px';
+  }
+  var ctx=canvas.getContext('2d');
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.clearRect(0,0,W,H);
+  if(_ibState.animStart===null) _ibState.animStart=frame;
+  var el=frame-_ibState.animStart;
+
+  /* ── Background — darkens as we go deeper ── */
+  var bgGrad=ctx.createLinearGradient(0,0,0,H);
+  bgGrad.addColorStop(0,'#1A0E12');
+  bgGrad.addColorStop(0.35,'#0D1520');
+  bgGrad.addColorStop(1,'#050C14');
+  ctx.fillStyle=bgGrad; ctx.fillRect(0,0,W,H);
+
+  /* ── Waterline shimmer at top ── */
+  var shimT=eoC(Math.min(1,el/30));
+  if(shimT>0){
+    ctx.save(); ctx.globalAlpha=0.18*shimT;
+    var wlGrad=ctx.createLinearGradient(0,0,W,0);
+    wlGrad.addColorStop(0,'transparent');
+    wlGrad.addColorStop(0.3,'rgba(100,180,220,0.6)');
+    wlGrad.addColorStop(0.7,'rgba(100,180,220,0.6)');
+    wlGrad.addColorStop(1,'transparent');
+    ctx.fillStyle=wlGrad; ctx.fillRect(0,padT-6,W,4);
+    /* shimmer wave */
+    var waveOff=(el%120)/120;
+    ctx.beginPath();
+    for(var wx=0;wx<=W;wx+=4){
+      var wy=padT-4+Math.sin((wx/W+waveOff)*Math.PI*4)*2;
+      wx===0?ctx.moveTo(wx,wy):ctx.lineTo(wx,wy);
+    }
+    ctx.strokeStyle='rgba(140,200,240,0.4)'; ctx.lineWidth=1.5; ctx.stroke();
+    ctx.restore();
+  }
+
+  /* ── Depth bar on left ── */
+  var depthBarW=6;
+  var depthBarX=8;
+  var depthBarGrad=ctx.createLinearGradient(0,padT,0,H-padB);
+  depthBarGrad.addColorStop(0,'#E8524A');
+  depthBarGrad.addColorStop(0.25,'#F5943A');
+  depthBarGrad.addColorStop(0.45,'#5B9BD5');
+  depthBarGrad.addColorStop(0.65,'#9C5FC8');
+  depthBarGrad.addColorStop(0.82,'#3A3A6E');
+  depthBarGrad.addColorStop(1,'#1F7A4A');
+  var allLayersT=eoC(Math.min(1,(el-10)/60));
+  ctx.save(); ctx.globalAlpha=allLayersT*0.7;
+  ctx.beginPath(); ctx.roundRect(depthBarX,padT,(depthBarW),(H-padT-padB),3);
+  ctx.fillStyle=depthBarGrad; ctx.fill();
+  ctx.restore();
+
+  /* ── Depth tick marks ── */
+  var padX=Math.max(28,W*0.05);
+  var arrowX=W/2;
+
+  LAYERS.forEach(function(layer,i){
+    var lDelay=8+i*16;
+    var lT=eoC(Math.max(0,(el-lDelay)/30));
+    var lA=Math.min(1,Math.max(0,(el-lDelay)/30));
+    if(lA<=0) return;
+
+    var isH=_ibState.hov===i;
+    var hv=pLift('ib_'+i,isH)*5;
+    var y=padT+i*(rowH+gapY)-hv;
+
+    /* depth tick on bar */
+    var tickY=padT+(i+0.5)*(H-padT-padB)/LAYERS.length;
+    ctx.save(); ctx.globalAlpha=lA*0.6;
+    ctx.beginPath(); ctx.moveTo(depthBarX+depthBarW,tickY); ctx.lineTo(depthBarX+depthBarW+5,tickY);
+    ctx.strokeStyle='rgba(255,255,255,0.4)'; ctx.lineWidth=1; ctx.stroke();
+    ctx.restore();
+
+    /* ── Connector arrow ── */
+    if(i>0&&lA>0.4){
+      var prevY=padT+(i-1)*(rowH+gapY)+rowH;
+      ctx.save(); ctx.globalAlpha=lA*0.65;
+      /* animated draw length */
+      var prog=Math.min(1,(lA-0.4)/0.6);
+      var arY1=prevY+3, arY2=y-3;
+      var arMid=lerp(arY1,arY2,prog);
+      ctx.beginPath(); ctx.moveTo(arrowX,arY1); ctx.lineTo(arrowX,arMid);
+      ctx.strokeStyle='rgba(200,220,255,0.45)'; ctx.lineWidth=2; ctx.stroke();
+      if(prog>0.85){
+        ctx.globalAlpha=lA*0.8;
+        ctx.beginPath();
+        ctx.moveTo(arrowX-7,arY2-9); ctx.lineTo(arrowX,arY2-1); ctx.lineTo(arrowX+7,arY2-9);
+        ctx.strokeStyle='rgba(220,235,255,0.65)'; ctx.lineWidth=2;
+        ctx.lineJoin='round'; ctx.stroke();
+      }
+      ctx.restore();
+    }
+
+    /* slide in from left with slight rotation */
+    ctx.save(); ctx.globalAlpha=lA;
+    ctx.translate(lerp(-W*0.25,0,lT),0);
+
+    /* glow behind box when hovered */
+    if(isH){
+      ctx.save(); ctx.globalAlpha=0.22;
+      ctx.shadowColor=layer.bg; ctx.shadowBlur=30;
+      ctx.beginPath(); ctx.roundRect(padX,y,W-padX*2,rowH,12);
+      ctx.fillStyle=layer.bg; ctx.fill(); ctx.shadowBlur=0;
+      ctx.restore();
+    }
+
+    /* ── Box with left accent stripe ── */
+    var lw=W-padX*2;
+    /* box shadow */
+    ctx.shadowColor=layer.border+(isH?'CC':'44');
+    ctx.shadowBlur=isH?20:5; ctx.shadowOffsetY=isH?5:2;
+    ctx.beginPath(); ctx.roundRect(padX,y,lw,rowH,10);
+    /* box gradient fill */
+    var boxGrad=ctx.createLinearGradient(padX,y,padX+lw,y+rowH);
+    boxGrad.addColorStop(0,layer.bg);
+    boxGrad.addColorStop(1,layer.bg+'CC');
+    ctx.fillStyle=boxGrad; ctx.fill();
+    ctx.shadowBlur=0; ctx.shadowOffsetY=0;
+    /* border */
+    ctx.strokeStyle=isH?'rgba(255,255,255,0.45)':layer.border+'BB';
+    ctx.lineWidth=isH?2:1.5; ctx.stroke();
+    /* left accent stripe */
+    ctx.beginPath(); ctx.roundRect(padX,y,5,rowH,{upperLeft:10,lowerLeft:10,upperRight:0,lowerRight:0});
+    ctx.fillStyle='rgba(255,255,255,0.25)'; ctx.fill();
+
+    /* ── Inner shimmer line when hovered ── */
+    if(isH){
+      ctx.save(); ctx.globalAlpha=0.15;
+      var shimGrad=ctx.createLinearGradient(padX,y,padX+lw,y);
+      shimGrad.addColorStop(0,'transparent');
+      shimGrad.addColorStop(0.5,'rgba(255,255,255,0.8)');
+      shimGrad.addColorStop(1,'transparent');
+      ctx.fillStyle=shimGrad;
+      ctx.fillRect(padX+5,y+2,lw-5,4);
+      ctx.restore();
+    }
+
+    /* ── Text ── */
+    var bfs=Math.max(10,Math.min(12,W*0.014));
+    var tfs=Math.max(11,Math.min(14,W*0.017));
+    var innerX=padX+18, innerY=y+rowH/2;
+    ctx.textBaseline='middle';
+    /* emoji */
+    ctx.font=(bfs+2)+'px sans-serif'; ctx.textAlign='left';
+    ctx.fillStyle='rgba(255,255,255,0.95)';
+    ctx.fillText(layer.emoji, innerX, innerY);
+    /* badge pill */
+    var bpillW=Math.min(110,W*0.13);
+    var bpillH=bfs+6, bpillX=innerX+26, bpillY=innerY-bpillH/2;
+    ctx.beginPath(); ctx.roundRect(bpillX,bpillY,bpillW,bpillH,4);
+    ctx.fillStyle='rgba(0,0,0,0.25)'; ctx.fill();
+    ctx.strokeStyle='rgba(255,255,255,0.2)'; ctx.lineWidth=1; ctx.stroke();
+    ctx.font='800 '+bfs+'px Plus Jakarta Sans,sans-serif';
+    ctx.fillStyle='rgba(255,255,255,0.95)'; ctx.textAlign='center';
+    ctx.fillText(layer.badge, bpillX+bpillW/2, innerY);
+    /* body text — wrap to fit */
+    ctx.font='500 '+tfs+'px Plus Jakarta Sans,sans-serif';
+    ctx.fillStyle='rgba(255,255,255,0.85)'; ctx.textAlign='left';
+    var textStartX=bpillX+bpillW+14;
+    var maxTW=padX+lw-textStartX-12;
+    var txt=layer.text;
+    while(ctx.measureText(txt).width>maxTW&&txt.length>6) txt=txt.slice(0,-1);
+    if(txt!==layer.text) txt+='…';
+    ctx.fillText(txt, textStartX, innerY);
+
+    ctx.textBaseline='alphabetic';
+    ctx.restore();
+    layer._hy=y; layer._hh=rowH; layer._padX=padX; layer._lw=W-padX*2;
+  });
+
+  ctx.textBaseline='alphabetic'; ctx.globalAlpha=1;
+}
+
+/* ═══════════════════════════════════════════
+   INTERSECTION OBSERVERS — start animations
+   when sections scroll into view
+═══════════════════════════════════════════ */
+var _pimStarted=false, _ibStarted=false;
+
+function startMatrix(){
+  if(_pimStarted) return; _pimStarted=true;
+  var canvas=document.getElementById('pimCanvas');
+  _pimState.animStart=null;
+  var frame=0;
+  function loop(){ drawMatrix(canvas,frame++); _pimState.raf=requestAnimationFrame(loop); }
+  loop();
+  /* hover */
+  canvas.onmousemove=function(e){
+    var rect=canvas.getBoundingClientRect();
+    var dpr=window.devicePixelRatio||1;
+    var mx=(e.clientX-rect.left)*(canvas.width/dpr/rect.width);
+    var my=(e.clientY-rect.top)*(canvas.height/dpr/rect.height);
+    var hit=null;
+    MATRIX_POINTS.forEach(function(pt,i){
+      if(pt._hx!==undefined){
+        var dx=mx-pt._hx, dy=my-pt._hy;
+        if(Math.sqrt(dx*dx+dy*dy)<=16) hit=i;
+      }
+    });
+    _pimState.hov=hit; canvas.style.cursor=hit!==null?'pointer':'default';
+  };
+  canvas.onmouseleave=function(){ _pimState.hov=null; };
+}
+
+function startIceberg(){
+  if(_ibStarted) return; _ibStarted=true;
+  var canvas=document.getElementById('icebergCanvas');
+  _ibState.animStart=null;
+  var frame=0;
+  function loop(){ drawIceberg(canvas,frame++); _ibState.raf=requestAnimationFrame(loop); }
+  loop();
+}
+
+if(window.IntersectionObserver){
+  var mObs=new IntersectionObserver(function(es){ if(es[0].isIntersecting) startMatrix(); },{threshold:0.1});
+  var iObs=new IntersectionObserver(function(es){ if(es[0].isIntersecting) startIceberg(); },{threshold:0.1});
+  mObs.observe(document.getElementById('pillarsMatrixSection'));
+  iObs.observe(document.getElementById('pillarsDiagnoseSection'));
+} else {
+  /* fallback — start immediately */
+  setTimeout(startMatrix, 600);
+  setTimeout(startIceberg, 900);
+}
+
+/* ═══════════════════════════════════════════
+   OPEN / CLOSE
+═══════════════════════════════════════════ */
+var _mRaf=null;
+
+function openPillars(){
+  var overlay=document.getElementById('pillarsOverlay');
+  var canvas=document.getElementById('pillarsCanvas');
+  document.body.style.overflow='hidden';
+  document.getElementById('pillarsBody').scrollTop=0;
+  _mState.animStart=null; _mState.hovP=null; _mState.hovL=null;
+  _pH={}; _pimStarted=false; _ibStarted=false;
+  _pimState.animStart=null; _ibState.animStart=null;
+  if(_pimState.raf){cancelAnimationFrame(_pimState.raf);_pimState.raf=null;}
+  if(_ibState.raf){cancelAnimationFrame(_ibState.raf);_ibState.raf=null;}
+  MAP.pillars.forEach(function(p){ p._hx=undefined; p.leaves.forEach(function(l){l._hx=undefined;}); });
+  MATRIX_POINTS.forEach(function(pt){pt._hx=undefined;});
+  overlay.classList.add('open');
+  if(_mRaf) cancelAnimationFrame(_mRaf);
+  var frame=0;
+  function loop(){ drawMap(canvas,frame++); _mRaf=requestAnimationFrame(loop); }
+  loop();
+  /* hover */
+  canvas.onmousemove=function(e){
+    var rect=canvas.getBoundingClientRect();
+    var dpr=_mState.dpr;
+    var mx=(e.clientX-rect.left)*(canvas.width/dpr/rect.width);
+    var my=(e.clientY-rect.top)*(canvas.height/dpr/rect.height);
+    var hit=mapHit(mx,my);
+    _mState.hovP=hit&&hit.type==='pillar'?hit.pi:null;
+    _mState.hovL=hit&&hit.type==='leaf'?{pi:hit.pi,li:hit.li}:null;
+    canvas.style.cursor=hit?'pointer':'default';
+    if(hit) mapTooltip(hit,rect); else hideTooltip();
+  };
+  canvas.onmouseleave=function(){ _mState.hovP=null; _mState.hovL=null; hideTooltip(); };
+}
+
+function closePillars(){
+  document.getElementById('pillarsOverlay').classList.remove('open');
+  document.body.style.overflow='';
+  if(_mRaf){cancelAnimationFrame(_mRaf);_mRaf=null;}
+  if(_pimState.raf){cancelAnimationFrame(_pimState.raf);_pimState.raf=null;}
+  if(_ibState.raf){cancelAnimationFrame(_ibState.raf);_ibState.raf=null;}
+  hideTooltip();
+}
+
+document.getElementById('openPillars').addEventListener('click',function(e){ e.preventDefault(); openPillars(); });
+document.getElementById('pillarsClose').addEventListener('click',closePillars);
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'&&document.getElementById('pillarsOverlay').classList.contains('open')) closePillars();
+});
+window.addEventListener('resize',function(){
+  if(document.getElementById('pillarsOverlay').classList.contains('open')){
+    var c=document.getElementById('pillarsCanvas'); c.width=0; c.height=0;
+  }
+},{passive:true});
 
 })();
 </script>
